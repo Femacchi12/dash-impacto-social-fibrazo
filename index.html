@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050807">
+  <title>FIBRAZO · Impacto Social</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-dot">F</span><div><b>FIBRAZO</b><small>GROWTH · IMPACTO SOCIAL</small></div></div>
+    <div class="sync"><span>Última actualización</span><b id="updatedAt">11/07/2026, 3:30 p. m.</b></div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div><span class="tag">FIBRAZO / GROWTH · SOCIALIZACIÓN</span><h1>Conectividad que transforma</h1><p>Instituciones educativas y fundaciones conectadas gratuitamente por FIBRAZO.</p></div>
+      <div class="view-switch" role="tablist"><button class="active" data-view="schools">Escuelas</button><button data-view="people">Alumnos</button></div>
+    </section>
+
+    <section class="filters panel">
+      <div class="section-title"><div><span>FILTROS</span><h2>Explora el impacto</h2></div><button id="clearFilters" class="outline">Limpiar filtros</button></div>
+      <div class="filter-grid">
+        <label>Tipo de organización<select id="orgFilter"><option value="education">Instituciones educativas</option><option value="foundation">Fundaciones</option></select></label>
+        <label>Ciudad<select id="cityFilter"><option value="all">Todas</option></select></label>
+        <label>Zona FIBRAZO<select id="zoneFilter"><option value="all">Todas</option></select></label>
+        <label>Tipo de sede<select id="siteFilter"><option value="all">Principal y sede</option><option>Principal</option><option>Sede</option></select></label>
+        <label>Tamaño<select id="sizeFilter"><option value="all">Todos</option><option value="0-200">0–200</option><option value="201-500">201–500</option><option value="501-1000">501–1.000</option><option value="1001+">Más de 1.000</option></select></label>
+        <label>Internet previo<select id="internetFilter"><option value="all">Sí y no</option><option value="Sí">Sí</option><option value="No">No</option></select></label>
+      </div>
+    </section>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="charts">
+      <article class="panel chart-card"><div class="section-title"><div><span>EVOLUCIÓN</span><h2 id="growthTitle">Crecimiento acumulado</h2></div><div class="mini-switch"><button class="active">Año</button><button>Mes</button></div></div><div id="growthChart" class="growth-chart"></div></article>
+      <article class="panel chart-card"><div class="section-title"><div><span>DISTRIBUCIÓN</span><h2>Impacto por ciudad</h2></div></div><div id="cityChart" class="bar-chart"></div></article>
+    </section>
+
+    <section class="panel connectivity">
+      <div class="section-title"><div><span>CONECTIVIDAD ANTERIOR</span><h2>Situación antes de FIBRAZO</h2></div></div>
+      <div class="connect-grid"><div id="internetSummary" class="donut-wrap"></div><div><h3>Proveedores anteriores</h3><div id="providerChart" class="provider-list"></div></div><div><h3>Percepción del servicio</h3><div id="qualityChart" class="quality-grid"></div></div></div>
+    </section>
+
+    <section class="panel records">
+      <div class="section-title"><div><span>BASE DETALLADA</span><h2 id="tableTitle">Instituciones educativas</h2></div><input id="searchInput" type="search" placeholder="Buscar institución o sede…"></div>
+      <div class="table-wrap"><table><thead><tr><th>Institución / sede</th><th>Ciudad</th><th>Zona FIBRAZO</th><th>Tipo</th><th id="peopleHeader">Alumnos</th><th>Instalación</th><th>Internet previo</th><th>Proveedor</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+    </section>
+  </main>
+  <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
