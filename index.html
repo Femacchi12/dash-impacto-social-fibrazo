@@ -18,9 +18,8 @@
         <h1>Dashboard de Impacto Social</h1>
         <p>Seguimiento de instituciones educativas, fundaciones, alumnos y beneficiarios conectados gratuitamente.</p>
       </div>
-      <div class="update-cards">
-        <article><span>Última actualización</span><b id="updatedAt">11/07/2026, 3:30:00 p. m.</b></article>
-        <article><span>Próxima actualización</span><b>11/07/2026, 4:40:00 p. m.</b></article>
+      <div class="update-cards single">
+        <article><span>Última actualización de datos</span><b id="updatedAt">12/07/2026</b><button id="refreshDashboard" class="refresh-button">↻ Actualizar</button></article>
       </div>
       <div class="orbit" aria-hidden="true"></div>
     </header>
@@ -49,7 +48,12 @@
 
     <section class="panel connectivity">
       <div class="section-title"><div><span>CONECTIVIDAD ANTERIOR</span><h2>Situación antes de FIBRAZO</h2></div></div>
-      <div class="connect-grid"><div id="internetSummary" class="donut-wrap"></div><div><h3>Proveedores anteriores</h3><div id="providerChart" class="provider-list"></div></div><div><h3>Percepción del servicio</h3><div id="qualityChart" class="quality-grid"></div></div></div>
+      <div class="connect-grid"><div id="internetSummary" class="donut-wrap"></div><div><h3>Proveedores anteriores</h3><div id="providerChart" class="provider-list"></div></div><div><h3>Percepción del servicio previo a FIBRAZO</h3><div id="qualityChart" class="quality-grid"></div></div></div>
+    </section>
+
+    <section class="panel school-size">
+      <div class="section-title"><div><span>TAMAÑO DE LAS ESCUELAS</span><h2>Distribución por cantidad de alumnos</h2></div></div>
+      <div class="size-layout"><div id="sizeChart" class="size-chart"></div><div id="sizeSummary" class="size-summary"></div></div>
     </section>
 
     <section class="panel records">
