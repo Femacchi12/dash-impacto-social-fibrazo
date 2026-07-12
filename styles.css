@@ -43,3 +43,9 @@
 .growth-col b{font-size:9px}
 .growth-col small{font-size:8px;white-space:nowrap;transform:rotate(-35deg);transform-origin:center;margin-top:8px}
 @media(max-width:760px){.detail-tabs{padding-left:14px;padding-right:14px}.records .section-title{display:block}.records input{width:100%;margin-top:14px}.growth-chart{gap:10px!important}.growth-col{flex-basis:42px!important;min-width:42px}.growth-col i{width:27px}}
+
+/* Navegación principal con tres vistas */
+.filter-grid{grid-template-columns:repeat(5,1fr)}
+.view-switch button{min-width:92px}
+@media(max-width:760px){.view-switch{width:100%;overflow-x:auto}.view-switch button{flex:1;min-width:100px}.filter-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.filter-grid{grid-template-columns:1fr}}
