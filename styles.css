@@ -91,3 +91,31 @@ main,.charts,.chart-card,.growth-panel{min-width:0;max-width:100%}
 .growth-chart.monthly .growth-col b{display:none}
 .growth-chart.monthly .growth-col small{display:none}
 @media(max-width:760px){.growth-chart.monthly{gap:1px!important}.growth-chart.monthly .growth-col{flex:1 1 0!important;min-width:0!important}.growth-chart.monthly .growth-col i{width:70%!important;min-width:2px!important}}
+
+/* Línea de tiempo mensual desplazable con referencias */
+.growth-chart.monthly{display:flex!important;width:100%!important;max-width:100%!important;gap:10px!important;overflow-x:auto!important;overflow-y:hidden!important;padding:28px 10px 22px!important;contain:inline-size;scroll-snap-type:x proximity}
+.growth-chart.monthly .growth-col{flex:0 0 46px!important;min-width:46px!important;width:46px!important;scroll-snap-align:end;overflow:visible}
+.growth-chart.monthly .growth-col i{display:block!important;width:28px!important;min-width:28px!important;margin:0 auto}
+.growth-chart.monthly .growth-col b{display:block!important;font-size:8px!important;white-space:nowrap}
+.growth-chart.monthly .growth-col small{display:block!important;font-size:7px!important;white-space:nowrap;transform:rotate(-38deg);transform-origin:center;margin-top:8px}
+
+/* Contención general para celulares y tablets */
+@media(max-width:1200px){
+ main,footer{width:calc(100% - 24px)!important;max-width:100%!important}
+ .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .charts{grid-template-columns:minmax(0,1fr)!important}
+ .connect-grid{grid-template-columns:minmax(0,1fr)!important}
+ .connect-grid>div:last-child{grid-column:auto!important}
+ .size-layout{grid-template-columns:minmax(0,1fr)!important}
+ .panel,.chart-card,.connectivity,.records,.filters,.school-size{min-width:0!important;max-width:100%!important}
+ .filter-grid>*{min-width:0!important}
+ .provider-item{grid-template-columns:minmax(90px,130px) minmax(0,1fr) 30px}
+}
+@media(max-width:600px){
+ main,footer{width:calc(100% - 20px)!important}
+ .filter-grid{grid-template-columns:minmax(0,1fr)!important}
+ .kpis{grid-template-columns:minmax(0,1fr)!important}
+ .growth-chart.monthly{gap:8px!important}
+ .growth-chart.monthly .growth-col{flex-basis:44px!important;min-width:44px!important;width:44px!important}
+}
