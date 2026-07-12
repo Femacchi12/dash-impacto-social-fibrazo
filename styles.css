@@ -18,3 +18,9 @@
 .view-toolbar p{margin:10px 0 0;color:#77988c;font-size:11px}
 @media(max-width:850px){.hero-header{display:block}.update-cards{width:100%;margin-top:20px}.update-cards article{text-align:left}.view-toolbar{align-items:flex-end}}
 @media(max-width:560px){.hero-header{padding:18px}.hero-brand span{font-size:25px}.update-cards{grid-template-columns:1fr}.update-cards article:nth-child(2){display:none}.hero-copy p{line-height:1.55}.view-toolbar{display:block}.view-switch{margin-top:16px}}
+
+/* Interacciones y serie mensual */
+.growth-chart{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;gap:clamp(24px,5vw,70px);scrollbar-color:var(--green) #14211d;scrollbar-width:thin}
+.growth-col{flex:1 0 62px}
+.growth-chart>.empty{margin:auto}
+@media(max-width:760px){.growth-chart{gap:28px;padding-left:8px;padding-right:8px}.growth-col{flex-basis:48px}.mini-switch{flex-shrink:0}.chart-card .section-title{align-items:center}.chart-card{overflow:hidden}}
