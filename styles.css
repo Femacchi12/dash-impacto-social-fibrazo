@@ -24,3 +24,22 @@
 .growth-col{flex:1 0 62px}
 .growth-chart>.empty{margin:auto}
 @media(max-width:760px){.growth-chart{gap:28px;padding-left:8px;padding-right:8px}.growth-col{flex-basis:48px}.mini-switch{flex-shrink:0}.chart-card .section-title{align-items:center}.chart-card{overflow:hidden}}
+
+/* Base detallada por pestañas */
+.records-head{padding-bottom:14px!important}
+.detail-tabs{display:flex;gap:7px;padding:0 20px 16px;overflow-x:auto;border-bottom:1px solid #17251f}
+.detail-tabs button{border:1px solid #244137;background:#0d1713;color:var(--muted);padding:9px 13px;border-radius:10px;font:700 10px Inter,sans-serif;white-space:nowrap;cursor:pointer}
+.detail-tabs button.active{background:var(--green);border-color:var(--green);color:#002014}
+.client-link{display:inline-block;color:#001b10;background:var(--green);padding:5px 9px;border-radius:8px;font-weight:800;text-decoration:none}
+.client-link:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.data-link{color:#8be6c2;text-decoration:none}.data-link:hover{text-decoration:underline}
+.institution-cell{font-weight:650;color:#fff}
+.records td{max-width:280px;overflow:hidden;text-overflow:ellipsis}
+
+/* Evolución compacta y todos los meses */
+.growth-chart{gap:14px!important;justify-content:flex-start;padding-left:8px;padding-right:8px}
+.growth-col{flex:0 0 46px!important;min-width:46px}
+.growth-col i{width:30px}
+.growth-col b{font-size:9px}
+.growth-col small{font-size:8px;white-space:nowrap;transform:rotate(-35deg);transform-origin:center;margin-top:8px}
+@media(max-width:760px){.detail-tabs{padding-left:14px;padding-right:14px}.records .section-title{display:block}.records input{width:100%;margin-top:14px}.growth-chart{gap:10px!important}.growth-col{flex-basis:42px!important;min-width:42px}.growth-col i{width:27px}}
