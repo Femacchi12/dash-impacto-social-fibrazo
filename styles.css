@@ -74,3 +74,12 @@
 .growth-col{scroll-snap-align:end}
 @media(max-width:850px){.update-cards.single{width:100%}.size-layout{grid-template-columns:1fr}.size-summary{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.update-cards.single article{display:grid!important;text-align:left}.size-summary{grid-template-columns:1fr 1fr}.size-summary article:last-child{grid-column:1/-1}}
+
+/* Corrección de desbordamiento en la vista mensual */
+html,body{max-width:100%;overflow-x:hidden}
+main,.charts,.chart-card,.growth-panel{min-width:0;max-width:100%}
+.charts{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.growth-chart{box-sizing:border-box;display:flex;width:100%;min-width:0!important;max-width:100%;overflow-x:auto!important;overflow-y:hidden;contain:inline-size}
+.growth-col{flex-grow:0!important;flex-shrink:0!important}
+.table-wrap{max-width:100%}
+@media(max-width:760px){.charts{grid-template-columns:minmax(0,1fr)}.chart-card{width:100%;overflow:hidden}.growth-chart{width:100%;max-width:100%;overflow-x:auto!important;-webkit-overflow-scrolling:touch}.growth-col{flex:0 0 40px!important;min-width:40px!important}.growth-col small{transform:rotate(-45deg);margin-top:11px}}
