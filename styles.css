@@ -49,3 +49,28 @@
 .view-switch button{min-width:92px}
 @media(max-width:760px){.view-switch{width:100%;overflow-x:auto}.view-switch button{flex:1;min-width:100px}.filter-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.filter-grid{grid-template-columns:1fr}}
+
+/* Actualización manual */
+.update-cards.single{grid-template-columns:1fr;width:min(350px,34%)}
+.update-cards.single article{display:grid;grid-template-columns:1fr auto;grid-template-areas:"label button" "date button";align-items:center;column-gap:18px}
+.update-cards.single span{grid-area:label}.update-cards.single b{grid-area:date}
+.refresh-button{grid-area:button;border:1px solid var(--green);background:var(--green);color:#002014;border-radius:10px;padding:9px 13px;font:800 10px Inter,sans-serif;cursor:pointer}
+.refresh-button:hover{filter:brightness(1.08)}
+
+/* Tamaño de escuelas */
+.school-size{padding:20px;margin-bottom:14px}
+.size-layout{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;margin-top:22px}
+.size-chart{display:flex;flex-direction:column;gap:13px}
+.size-row{display:grid;grid-template-columns:95px 1fr 35px;gap:10px;align-items:center;font-size:10px}
+.size-row b{text-align:right}
+.size-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.size-summary article{background:#101915;border:1px solid #20352c;border-radius:13px;padding:15px}
+.size-summary span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+.size-summary b{display:block;color:var(--green);font-size:22px;margin-top:8px}
+.size-summary small{display:block;color:#8fa9a0;font-size:8px;margin-top:5px;line-height:1.4}
+
+/* La serie mensual permanece dentro del panel */
+.growth-chart{width:100%;max-width:100%;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+.growth-col{scroll-snap-align:end}
+@media(max-width:850px){.update-cards.single{width:100%}.size-layout{grid-template-columns:1fr}.size-summary{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.update-cards.single article{display:grid!important;text-align:left}.size-summary{grid-template-columns:1fr 1fr}.size-summary article:last-child{grid-column:1/-1}}
