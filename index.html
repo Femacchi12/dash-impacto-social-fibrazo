@@ -54,8 +54,14 @@
     </section>
 
     <section class="panel records">
-      <div class="section-title"><div><span>BASE DETALLADA</span><h2 id="tableTitle">Instituciones educativas</h2></div><input id="searchInput" type="search" placeholder="Buscar institución o sede…"></div>
-      <div class="table-wrap"><table><thead><tr><th>Institución / sede</th><th>Ciudad</th><th>Zona FIBRAZO</th><th>Tipo</th><th id="peopleHeader">Alumnos</th><th>Instalación</th><th>Internet previo</th><th>Proveedor</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+      <div class="section-title records-head"><div><span>BASE DETALLADA</span><h2 id="tableTitle">Instituciones educativas</h2></div><input id="searchInput" type="search" placeholder="Buscar cliente, institución o sede…"></div>
+      <div class="detail-tabs" role="tablist">
+        <button class="active" data-detail="summary">Resumen</button>
+        <button data-detail="contact">Información de contacto</button>
+        <button data-detail="fibrazo">Información FIBRAZO</button>
+        <button data-detail="institution">Información de la institución</button>
+      </div>
+      <div class="table-wrap"><table><thead id="recordsHead"></thead><tbody id="recordsBody"></tbody></table></div>
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
