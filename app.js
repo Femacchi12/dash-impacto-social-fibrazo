@@ -51,6 +51,7 @@ function renderSizes(){const panel=$('.school-size');if(currentOrg()==='foundati
 function activeColumns(){
  const all=DETAIL[detailTab];
  if(!visibleColumns[detailTab])visibleColumns[detailTab]=new Set(all.map(c=>c[0]));
+ visibleColumns[detailTab].add('client');
  return all.filter(c=>visibleColumns[detailTab].has(c[0]));
 }
 function sortValue(d,key){
@@ -61,7 +62,7 @@ function sortValue(d,key){
 }
 function renderColumnsMenu(){
  const selected=visibleColumns[detailTab]||new Set(DETAIL[detailTab].map(c=>c[0]));
- $('#columnsMenu').innerHTML=DETAIL[detailTab].map(([key,label])=>'<label><input type="checkbox" data-column="'+key+'" '+(selected.has(key)?'checked':'')+'><span>'+label.replace(/:/g,'')+'</span></label>').join('');
+ $('#columnsMenu').innerHTML=DETAIL[detailTab].map(([key,label])=>'<label><input type="checkbox" data-column="'+key+'" '+(selected.has(key)?'checked':'')+' '+(key==='client'?'disabled title="Columna fija"':'')+'><span>'+label.replace(/:/g,'')+'</span></label>').join('');
 }
 function renderLocationsMap(rs){
  const panel=$('#locationsMapPanel'),tools=$('.table-tools'),wrap=$('#tableWrap');
@@ -72,10 +73,20 @@ function renderLocationsMap(rs){
  $('#mapCount').textContent=fmt(points.length)+' ubicaciones con coordenadas';
  const map=$('#locationsMap');
  if(!points.length){map.innerHTML='<div class="map-empty">No hay ubicaciones con coordenadas para estos filtros.</div>';return}
- const minLat=-4.5,maxLat=13,minLng=-79.2,maxLng=-66.5;
- const markers=points.map(({d,point},i)=>{const top=Math.max(2,Math.min(96,(maxLat-point[0])/(maxLat-minLat)*100)),left=Math.max(2,Math.min(97,(point[1]-minLng)/(maxLng-minLng)*100));return '<button class="presence-marker '+(d.org==='foundation'?'foundation':'')+'" style="left:'+left+'%;top:'+top+'%" data-map-index="'+i+'" aria-label="Ver '+esc(d.institution)+'"><i></i></button>'}).join('');
- map.innerHTML='<div class="presence-map"><div class="map-grid"></div><span class="map-label caribbean">Mar Caribe</span><span class="map-label colombia">COLOMBIA</span>'+markers+'<div id="mapInfoCard" class="map-info-card"><span>Selecciona un marcador para ver la información.</span></div></div>';
- map.onclick=e=>{const button=e.target.closest('[data-map-index]');if(!button)return;const item=points[Number(button.dataset.mapIndex)],d=item.d,p=item.point;map.querySelectorAll('.presence-marker').forEach(x=>x.classList.remove('active'));button.classList.add('active');$('#mapInfoCard').innerHTML='<b>'+esc(d.institution||'Sin información')+'</b><span>Cliente '+esc(d.client||'Sin información')+'</span><span>Sede '+esc(d.site||'Sin información')+'</span><span>'+esc(d.city||'Sin información')+'</span><a href="https://www.google.com/maps?q='+p[0]+','+p[1]+'" target="_blank" rel="noopener">Abrir en Google Maps</a>'};
+ const zoomLevel=6,tileStartX=17,tileEndX=21,tileStartY=29,tileEndY=33,tileCount=4;
+ const toTile=point=>{const lat=point[0]*Math.PI/180,n=Math.pow(2,zoomLevel);return{x:(point[1]+180)/360*n,y:(1-Math.log(Math.tan(lat)+1/Math.cos(lat))/Math.PI)/2*n}};
+ const tiles=[];for(let y=tileStartY;y<tileEndY;y++)for(let x=tileStartX;x<tileEndX;x++)tiles.push('<img draggable="false" alt="" src="https://tile.openstreetmap.org/'+zoomLevel+'/'+x+'/'+y+'.png" style="left:'+((x-tileStartX)/tileCount*100)+'%;top:'+((y-tileStartY)/tileCount*100)+'%">');
+ const markers=points.map(({d,point},i)=>{const tile=toTile(point),left=(tile.x-tileStartX)/tileCount*100,top=(tile.y-tileStartY)/tileCount*100;return '<button class="presence-marker '+(d.org==='foundation'?'foundation':'')+'" style="left:'+left+'%;top:'+top+'%" data-map-index="'+i+'" aria-label="Ver '+esc(d.institution)+'"></button>'}).join('');
+ map.innerHTML='<div class="map-navigation"><div class="map-controls"><button type="button" data-map-action="in" title="Acercar">+</button><button type="button" data-map-action="out" title="Alejar">−</button><button type="button" data-map-action="reset" title="Restablecer">⌂</button></div><div id="mapStage" class="map-stage"><div id="mapCanvas" class="map-canvas"><div class="map-tiles">'+tiles.join('')+'</div>'+markers+'</div></div><div id="mapInfoCard" class="map-info-card"><span>Selecciona un marcador para ver la información.</span></div><div class="map-attribution">© OpenStreetMap contributors</div></div>';
+ const stage=$('#mapStage'),canvas=$('#mapCanvas');let scale=1,panX=0,panY=0,dragging=false,lastX=0,lastY=0;
+ const apply=()=>{canvas.style.transform='translate('+panX+'px,'+panY+'px) scale('+scale+')'};
+ const zoom=delta=>{scale=Math.max(1,Math.min(5,scale+delta));if(scale===1){panX=0;panY=0}apply()};
+ map.querySelector('.map-controls').onclick=e=>{const action=e.target.closest('[data-map-action]')?.dataset.mapAction;if(action==='in')zoom(.5);if(action==='out')zoom(-.5);if(action==='reset'){scale=1;panX=0;panY=0;apply()}};
+ stage.onwheel=e=>{e.preventDefault();zoom(e.deltaY<0?.35:-.35)};
+ stage.onpointerdown=e=>{if(e.target.closest('.presence-marker'))return;dragging=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId)};
+ stage.onpointermove=e=>{if(!dragging)return;panX+=e.clientX-lastX;panY+=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;apply()};
+ stage.onpointerup=stage.onpointercancel=()=>{dragging=false;stage.classList.remove('dragging')};
+ stage.onclick=e=>{const button=e.target.closest('[data-map-index]');if(!button)return;const item=points[Number(button.dataset.mapIndex)],d=item.d,p=item.point;stage.querySelectorAll('.presence-marker').forEach(x=>x.classList.remove('active'));button.classList.add('active');$('#mapInfoCard').innerHTML='<b>'+esc(d.institution||'Sin información')+'</b><span>Cliente '+esc(d.client||'Sin información')+'</span><span>Sede '+esc(d.site||'Sin información')+'</span><span>'+esc(d.city||'Sin información')+'</span><a href="https://www.google.com/maps?q='+p[0]+','+p[1]+'" target="_blank" rel="noopener">Abrir en Google Maps</a>'};
 }
 function renderTable(){
  const foundation=currentOrg()==='foundation';
@@ -99,7 +110,7 @@ $$('.mini-switch button').forEach((b,i)=>b.addEventListener('click',()=>{$$('.mi
 [...document.querySelectorAll('.detail-tabs button')].forEach(b=>b.addEventListener('click',()=>{[...document.querySelectorAll('.detail-tabs button')].forEach(x=>x.classList.remove('active'));b.classList.add('active');detailTab=b.dataset.detail;sortKey='';sortDirection='asc';$('#columnsMenu').hidden=true;$('#columnsButton').setAttribute('aria-expanded','false');renderTable()}));
 $('#recordsHead').addEventListener('click',e=>{const button=e.target.closest('[data-sort]');if(!button)return;const key=button.dataset.sort;if(sortKey===key)sortDirection=sortDirection==='asc'?'desc':'asc';else{sortKey=key;sortDirection='asc'}renderTable()});
 $('#columnsButton').addEventListener('click',()=>{const menu=$('#columnsMenu');menu.hidden=!menu.hidden;$('#columnsButton').setAttribute('aria-expanded',String(!menu.hidden))});
-$('#columnsMenu').addEventListener('change',e=>{const input=e.target.closest('[data-column]');if(!input)return;const selected=visibleColumns[detailTab]||(visibleColumns[detailTab]=new Set(DETAIL[detailTab].map(c=>c[0])));if(input.checked)selected.add(input.dataset.column);else if(selected.size>1)selected.delete(input.dataset.column);else input.checked=true;renderTable()});
+$('#columnsMenu').addEventListener('change',e=>{const input=e.target.closest('[data-column]');if(!input)return;if(input.dataset.column==='client'){input.checked=true;return}const selected=visibleColumns[detailTab]||(visibleColumns[detailTab]=new Set(DETAIL[detailTab].map(c=>c[0])));if(input.checked)selected.add(input.dataset.column);else if(selected.size>1)selected.delete(input.dataset.column);else input.checked=true;renderTable()});
 document.addEventListener('click',e=>{if(!e.target.closest('.column-picker')){$('#columnsMenu').hidden=true;$('#columnsButton').setAttribute('aria-expanded','false')}});
 $('#scrollLeft').addEventListener('click',()=>$('#tableWrap').scrollBy({left:-Math.max(260,$('#tableWrap').clientWidth*.75),behavior:'smooth'}));
 $('#scrollRight').addEventListener('click',()=>$('#tableWrap').scrollBy({left:Math.max(260,$('#tableWrap').clientWidth*.75),behavior:'smooth'}));
