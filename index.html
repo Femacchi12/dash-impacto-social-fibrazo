@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260713-9">
+  <link rel="stylesheet" href="styles.css?v=20260713-10">
 </head>
 <body>
   <main>
@@ -36,6 +36,7 @@
         <label>Tipo de sede<select id="siteFilter"><option value="all">Principal y sede</option><option>Principal</option><option>Sede</option></select></label>
         <label>Tamaño<select id="sizeFilter"><option value="all">Todos</option><option value="0-200">0–200</option><option value="201-500">201–500</option><option value="501-1000">501–1.000</option><option value="1001+">Más de 1.000</option></select></label>
         <label>Internet previo<select id="internetFilter"><option value="all">Sí y no</option><option value="Sí">Sí</option><option value="No">No</option></select></label>
+        <label>Servicios instalados<select id="servicesFilter"><option value="all">Todos</option></select></label>
       </div>
     </section>
 
@@ -66,6 +67,7 @@
         <button data-detail="contact">Información de contacto</button>
         <button data-detail="fibrazo">Información FIBRAZO</button>
         <button data-detail="institution">Información de la institución</button>
+        <button data-detail="more">Más info</button>
         <button data-detail="map">Mapa</button>
       </div>
       <div class="table-tools">
@@ -80,6 +82,7 @@
         </div>
       </div>
       <div class="table-wrap" id="tableWrap"><table><thead id="recordsHead"></thead><tbody id="recordsBody"></tbody></table></div>
+      <div id="moreInfoPanel" class="more-info-panel" hidden></div>
       <div id="locationsMapPanel" class="locations-map-panel" hidden>
         <div class="map-summary"><b id="mapCount">0 ubicaciones</b><span>Presiona un marcador para ver el número de cliente, institución y sede.</span></div>
         <div id="locationsMap" aria-label="Mapa de instituciones y fundaciones conectadas"></div>
@@ -87,6 +90,6 @@
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
-  <script src="app.js?v=20260713-14"></script>
+  <script src="app.js?v=20260713-15"></script>
 </body>
 </html>
