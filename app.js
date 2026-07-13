@@ -97,7 +97,7 @@ function renderTable(){
  if(sortKey&&DETAIL[detailTab].some(c=>c[0]===sortKey))rs.sort((a,b)=>{const x=sortValue(a,sortKey),y=sortValue(b,sortKey);const result=typeof x==='number'?x-y:String(x).localeCompare(String(y),'es',{numeric:true});return sortDirection==='asc'?result:-result});
  $('#tableTitle').textContent=foundation?'Fundaciones conectadas':'Instituciones educativas conectadas';
  $('#recordCount').textContent=fmt(rs.length)+' registros';
- $('#recordsHead').innerHTML='<tr>'+columns.map(([key,label])=>'<th><button class="sort-button '+(sortKey===key?'sorted':'')+'" data-sort="'+key+'" type="button">'+label.replace(/:/g,'')+'<i>'+(sortKey===key?(sortDirection==='asc'?' ↑':' ↓'):' ↕')+'</i></button></th>').join('')+'</tr>';
+ $('#recordsHead').innerHTML='<tr>'+columns.map(([key,label])=>'<th><button class="sort-button '+(sortKey===key?'sorted':'')+'" data-sort="'+key+'" type="button">'+label.replace(/:/g,'')+'<i>'+(sortKey===key?(sortDirection==='asc'?' ↑':' ↓'):'')+'</i></button></th>').join('')+'</tr>';
  $('#recordsBody').innerHTML=rs.length?rs.map(d=>'<tr>'+columns.map(c=>'<td class="'+(c[0]==='institution'?'institution-cell':c[0]==='site'?'site-cell':'')+'">'+cell(d,c[0])+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+Math.max(1,columns.length)+'" class="empty">No hay resultados para estos filtros.</td></tr>';
  renderColumnsMenu();
 }
