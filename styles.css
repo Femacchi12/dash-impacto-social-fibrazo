@@ -868,3 +868,15 @@ main,.charts,.chart-card,.growth-panel{min-width:0;max-width:100%}
 .my-maps-frame{display:block;width:100%;height:100%;border:0;background:#0b1511}
 #locationsMap:has(.my-maps-frame){height:600px;padding:0;background:#0b1511}
 @media(max-width:760px){.growth-controls{width:100%;justify-content:flex-start}.growth-controls .mini-switch button{min-width:58px;padding:8px 10px}.growth-x-label{font-size:13px}.growth-y-label{font-size:12px}#locationsMap:has(.my-maps-frame){height:500px}}
+
+/* Evolución a todo el ancho y desplazamiento horizontal legible */
+.charts{grid-template-columns:minmax(0,1fr)!important}
+.charts .chart-card{grid-column:1/-1;width:100%;min-width:0}
+.charts .chart-card:first-child{min-height:430px}
+.growth-chart,.growth-chart.monthly{box-sizing:border-box;display:block!important;width:100%!important;max-width:100%!important;height:365px!important;min-height:365px!important;padding:0 0 8px!important;gap:0!important;overflow-x:auto!important;overflow-y:hidden!important;contain:none!important;scroll-snap-type:none!important}
+.growth-svg-inner{display:block!important;flex:0 0 auto!important;height:340px!important;min-width:760px!important;max-width:none!important}
+.growth-svg-inner svg{display:block!important;width:100%!important;height:340px!important;min-width:100%!important}
+.growth-chart::-webkit-scrollbar{height:13px}.growth-chart::-webkit-scrollbar-track{background:#102019;border-radius:10px}.growth-chart::-webkit-scrollbar-thumb{background:var(--green);border:3px solid #102019;border-radius:10px}
+.growth-chart{scrollbar-color:var(--green) #102019;scrollbar-width:auto}
+.growth-x-label{font-size:13px!important}.growth-y-label{font-size:12px!important}.growth-value{font-size:13px!important}
+@media(max-width:760px){.charts .chart-card:first-child{min-height:415px}.growth-chart,.growth-chart.monthly{height:350px!important;min-height:350px!important}.growth-svg-inner,.growth-svg-inner svg{height:325px!important}.growth-x-label{font-size:14px!important}.growth-y-label{font-size:13px!important}}
