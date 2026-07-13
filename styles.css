@@ -880,3 +880,35 @@ main,.charts,.chart-card,.growth-panel{min-width:0;max-width:100%}
 .growth-chart{scrollbar-color:var(--green) #102019;scrollbar-width:auto}
 .growth-x-label{font-size:13px!important}.growth-y-label{font-size:12px!important}.growth-value{font-size:13px!important}
 @media(max-width:760px){.charts .chart-card:first-child{min-height:415px}.growth-chart,.growth-chart.monthly{height:350px!important;min-height:350px!important}.growth-svg-inner,.growth-svg-inner svg{height:325px!important}.growth-x-label{font-size:14px!important}.growth-y-label{font-size:13px!important}}
+
+/* Ajustes de legibilidad y panel Más info */
+.chart-card svg text{font-size:14px}
+.growth-y-label{font-size:13px!important}
+.growth-value{font-size:14px!important}
+.provider-item,.bar-row,.size-row,.donut-labels{font-size:11px}
+.quality small,.size-summary small{font-size:11px}
+table{font-size:12px}
+th,.sort-button{font-size:11px}
+td{font-size:12px}
+.my-maps-title-link{color:var(--green);font-size:14px;font-weight:800;text-decoration:none}
+.my-maps-title-link:hover{text-decoration:underline}
+.more-info-panel{padding-top:14px}
+.more-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.more-kpis article{min-height:132px;padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(11,27,21,.92),rgba(5,10,8,.92))}
+.more-kpis span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.more-kpis strong{display:block;margin:12px 0 6px;color:var(--green);font-size:30px}
+.more-kpis small{color:#6acb9f;font-size:11px}
+.more-grids{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.more-grids section{padding:22px;border:1px solid var(--line);border-radius:18px;background:rgba(6,14,11,.78)}
+.more-grids h3{margin:5px 0 18px;font-size:18px}
+.more-bar{display:grid;grid-template-columns:minmax(140px,1.2fr) 2fr 44px;align-items:center;gap:10px;margin:11px 0;font-size:12px}
+.more-bar i{height:8px;border-radius:99px;background:#10221b;overflow:hidden}
+.more-bar i b{display:block;height:100%;border-radius:inherit;background:var(--green)}
+.more-bar strong{text-align:right;color:#fff}
+@media(max-width:760px){
+ .more-kpis{grid-template-columns:1fr 1fr}
+ .more-grids{grid-template-columns:1fr}
+ .more-bar{grid-template-columns:minmax(105px,1fr) 1.5fr 34px}
+ table{font-size:12px}
+ th,.sort-button{font-size:11px}
+}
