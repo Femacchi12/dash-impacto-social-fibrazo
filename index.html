@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260713-12">
+  <link rel="stylesheet" href="styles.css?v=20260713-13">
 </head>
 <body>
   <main>
@@ -28,10 +28,6 @@
       <div class="view-switch" role="tablist"><button class="active" data-view="schools">Escuelas</button><button data-view="people">Alumnos</button><button data-view="foundations">Fundaciones</button><button data-view="more">Más info</button></div>
     </section>
 
-    <section id="moreInfoView" class="panel more-info-view" hidden>
-      <div class="more-view-heading"><div><span>VISIÓN GENERAL</span><h2>Más información del impacto social</h2><p>Resumen consolidado de instituciones educativas y fundaciones conectadas por FIBRAZO.</p></div></div>
-      <div id="moreInfoContent"></div>
-    </section>
 
     <section class="filters panel">
       <div class="section-title"><div><span>FILTROS</span><h2>Explora el impacto</h2></div><button id="clearFilters" class="outline">Limpiar filtros</button></div>
@@ -43,6 +39,12 @@
         <label>Internet previo<select id="internetFilter"><option value="all">Sí y no</option><option value="Sí">Sí</option><option value="No">No</option></select></label>
         <label>Servicios instalados<select id="servicesFilter"><option value="all">Todos</option></select></label>
       </div>
+    </section>
+
+
+    <section id="moreInfoView" class="panel more-info-view" hidden>
+      <div class="more-view-heading"><div><span>VISIÓN GENERAL</span><h2>Más información del impacto social</h2><p>Resumen consolidado de instituciones educativas y fundaciones conectadas por FIBRAZO.</p></div></div>
+      <div id="moreInfoContent"></div>
     </section>
 
     <section class="kpis" id="kpis"></section>
@@ -93,6 +95,6 @@
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
-  <script src="app.js?v=20260713-16"></script>
+  <script src="app.js?v=20260713-17"></script>
 </body>
 </html>
