@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260713-7">
+  <link rel="stylesheet" href="styles.css?v=20260713-8">
 </head>
 <body>
   <main>
@@ -42,7 +42,10 @@
     <section class="kpis" id="kpis"></section>
 
     <section class="charts">
-      <article class="panel chart-card"><div class="section-title"><div><span>EVOLUCIÓN</span><h2 id="growthTitle">Crecimiento acumulado</h2></div><div class="mini-switch"><button class="active">Año</button><button>Mes</button></div></div><div id="growthChart" class="growth-chart"></div></article>
+      <article class="panel chart-card"><div class="section-title"><div><span>EVOLUCIÓN</span><h2 id="growthTitle">Crecimiento acumulado</h2></div><div class="growth-controls">
+  <div class="mini-switch period-switch" aria-label="Periodo"><button class="active" data-period="year">Año</button><button data-period="month">Mes</button></div>
+  <div class="mini-switch chart-switch" aria-label="Tipo de gráfico"><button class="active" data-chart="bar">Barras</button><button data-chart="line">Línea</button></div>
+</div></div><div id="growthChart" class="growth-chart"></div></article>
       <article class="panel chart-card"><div class="section-title"><div><span>DISTRIBUCIÓN</span><h2>Impacto por ciudad</h2></div></div><div id="cityChart" class="bar-chart"></div></article>
     </section>
 
@@ -84,6 +87,6 @@
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
-  <script src="app.js?v=20260713-12"></script>
+  <script src="app.js?v=20260713-13"></script>
 </body>
 </html>
