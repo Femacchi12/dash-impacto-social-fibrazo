@@ -36,13 +36,13 @@ function renderCities(){const rs=filtered(),map=new Map();rs.forEach(d=>{if(!map
 function group(rs,key){return Object.entries(rs.reduce((a,d)=>{const k=clean(d[key])||'No sabe';a[k]=(a[k]||0)+1;return a},{})).sort((a,b)=>b[1]-a[1])}
 function renderConnectivity(){const rs=filtered(),yes=rs.filter(d=>d.internet==='SI'||d.internet==='Sí').length,no=rs.length-yes,pct=Math.round(yes/Math.max(1,rs.length)*100);$('#internetSummary').innerHTML='<div class="donut" style="background:conic-gradient(var(--green) 0 '+pct+'%,var(--yellow) '+pct+'% 100%)"></div><div class="donut-labels"><div><i class="dot" style="background:var(--green)"></i>Tenían internet · '+yes+'</div><div><i class="dot" style="background:var(--yellow)"></i>No tenían · '+no+'</div></div>';const providers=group(rs,'provider').slice(0,7),pm=Math.max(1,...providers.map(x=>x[1]));$('#providerChart').innerHTML=providers.map(x=>'<div class="provider-item"><span>'+esc(x[0])+'</span><div class="track"><i style="width:'+x[1]/pm*100+'%"></i></div><b>'+x[1]+'</b></div>').join('')||'<p class="empty">Sin datos.</p>';$('#qualityChart').innerHTML=group(rs,'quality').map(x=>'<div class="quality"><b>'+x[1]+'</b><small>'+esc(x[0])+'</small></div>').join('')||'<p class="empty">Sin datos.</p>'}
 function cell(d,key){
- const value=d[key];if(key==='client')return '<a class="client-link" href="https://sysbrazo.fibrazo.com.co/clients/'+encodeURIComponent(value)+'/installation/'+encodeURIComponent(value)+'" target="_blank" rel="noopener">'+esc(value)+'</a>';
+ const value=d[key];if(key==='client')return '<a class="client-link" href="https://sysbrazo.fibrazo.com.co/clients?brochure_id=&document_id=&full_name=&phone_number=&gaiia_id='+encodeURIComponent(value)+'&gaiia_status=&email=&has_credit=0&validated_in_dian=0&payment_filter=0&churn_risk=&recharge_block_filter=0&coordinates=&city_id=0&neighborhood_id=&internet_plan_id=&tv_plan_id=&troncal_limit_id=&tv_status_id=&tv_addon_status_id=&tv_addon_tv_plan_id=&tv_pending=&stratum=&refered_code_installer=&client_type_id=&with_incident=0&is_reactivated=0" target="_blank" rel="noopener">'+esc(value)+'</a>';
  if(key==='people')return value?fmt(value):'No aplica';
- if(key.toLowerCase().includes('email')&&value)return '<a class="data-link" href="mailto:'+encodeURIComponent(value)+'">'+esc(value)+'</a>';
+ if(key.toLowerCase().includes('email')&&value)return '<a class="data-link cell-text" title="'+esc(value)+'" href="mailto:'+encodeURIComponent(value)+'">'+esc(value)+'</a>';
  if(key.toLowerCase().includes('phone')&&value)return '<a class="data-link" href="tel:'+value.replace(/\D/g,'')+'">'+esc(value)+'</a>';
  if(key==='type')return '<span class="pill">'+esc(value||'No sabe')+'</span>';
  if(key==='internet')return '<span class="bool '+((value==='NO'||value==='No')?'no':'')+'">'+esc(value||'No sabe')+'</span>';
- return esc(value||'No sabe')
+ return '<span class="cell-text" title="'+esc(value||'No sabe')+'">'+esc(value||'No sabe')+'</span>'
 }
 function sizeBucket(d){const n=d.people;if(n<=200)return '0–200';if(n<=500)return '201–500';if(n<=1000)return '501–1.000';if(n<=1500)return '1.001–1.500';if(n<=2000)return '1.501–2.000';return 'Más de 2.000'}
 function renderSizes(){const panel=$('.school-size');if(currentOrg()==='foundation'){panel.style.display='none';return}panel.style.display='block';const rs=filtered(),order=['0–200','201–500','501–1.000','1.001–1.500','1.501–2.000','Más de 2.000'],counts=Object.fromEntries(order.map(x=>[x,0]));rs.forEach(d=>counts[sizeBucket(d)]++);const max=Math.max(1,...Object.values(counts));$('#sizeChart').innerHTML=order.map(k=>'<div class="size-row"><span>'+k+'</span><div class="track"><i style="width:'+counts[k]/max*100+'%"></i></div><b>'+counts[k]+'</b></div>').join('');const total=rs.length,avg=total?Math.round(rs.reduce((a,d)=>a+d.people,0)/total):0,largest=rs.slice().sort((a,b)=>b.people-a.people)[0];$('#sizeSummary').innerHTML='<article><span>Promedio por sede</span><b>'+fmt(avg)+'</b></article><article><span>Sedes analizadas</span><b>'+fmt(total)+'</b></article><article><span>Mayor institución</span><b>'+(largest?fmt(largest.people):'0')+'</b><small>'+(largest?esc(largest.institution):'Sin resultados')+'</small></article>'}
@@ -59,7 +59,7 @@ function sortValue(d,key){
 }
 function renderColumnsMenu(){
  const selected=visibleColumns[detailTab]||new Set(DETAIL[detailTab].map(c=>c[0]));
- $('#columnsMenu').innerHTML=DETAIL[detailTab].map(([key,label])=>'<label><input type="checkbox" data-column="'+key+'" '+(selected.has(key)?'checked':'')+'><span>'+label+'</span></label>').join('');
+ $('#columnsMenu').innerHTML=DETAIL[detailTab].map(([key,label])=>'<label><input type="checkbox" data-column="'+key+'" '+(selected.has(key)?'checked':'')+'><span>'+label.replace(/:/g,'')+'</span></label>').join('');
 }
 function renderTable(){
  const foundation=currentOrg()==='foundation';
@@ -68,8 +68,8 @@ function renderTable(){
  if(sortKey&&DETAIL[detailTab].some(c=>c[0]===sortKey))rs.sort((a,b)=>{const x=sortValue(a,sortKey),y=sortValue(b,sortKey);const result=typeof x==='number'?x-y:String(x).localeCompare(String(y),'es',{numeric:true});return sortDirection==='asc'?result:-result});
  $('#tableTitle').textContent=foundation?'Fundaciones conectadas':'Instituciones educativas conectadas';
  $('#recordCount').textContent=fmt(rs.length)+' registros';
- $('#recordsHead').innerHTML='<tr>'+columns.map(([key,label])=>'<th><button class="sort-button '+(sortKey===key?'sorted':'')+'" data-sort="'+key+'" type="button">'+label+'<i>'+(sortKey===key?(sortDirection==='asc'?' ↑':' ↓'):' ↕')+'</i></button></th>').join('')+'</tr>';
- $('#recordsBody').innerHTML=rs.length?rs.map(d=>'<tr>'+columns.map(c=>'<td class="'+(c[0]==='institution'?'institution-cell':'')+'">'+cell(d,c[0])+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+Math.max(1,columns.length)+'" class="empty">No hay resultados para estos filtros.</td></tr>';
+ $('#recordsHead').innerHTML='<tr>'+columns.map(([key,label])=>'<th><button class="sort-button '+(sortKey===key?'sorted':'')+'" data-sort="'+key+'" type="button">'+label.replace(/:/g,'')+'<i>'+(sortKey===key?(sortDirection==='asc'?' ↑':' ↓'):' ↕')+'</i></button></th>').join('')+'</tr>';
+ $('#recordsBody').innerHTML=rs.length?rs.map(d=>'<tr>'+columns.map(c=>'<td class="'+(c[0]==='institution'?'institution-cell':c[0]==='site'?'site-cell':'')+'">'+cell(d,c[0])+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+Math.max(1,columns.length)+'" class="empty">No hay resultados para estos filtros.</td></tr>';
  renderColumnsMenu();
 }
 function render(){renderKpis();renderGrowth();renderCities();renderConnectivity();renderSizes();renderTable()}
