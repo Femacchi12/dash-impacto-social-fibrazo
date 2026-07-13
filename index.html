@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260713-10">
+  <link rel="stylesheet" href="styles.css?v=20260713-11">
 </head>
 <body>
   <main>
@@ -25,7 +25,12 @@
     </header>
     <section class="view-toolbar">
       <div><span class="tag">FIBRAZO / GROWTH · SOCIALIZACIÓN</span><p>Explora el alcance de la conectividad social de FIBRAZO.</p></div>
-      <div class="view-switch" role="tablist"><button class="active" data-view="schools">Escuelas</button><button data-view="people">Alumnos</button><button data-view="foundations">Fundaciones</button></div>
+      <div class="view-switch" role="tablist"><button class="active" data-view="schools">Escuelas</button><button data-view="people">Alumnos</button><button data-view="foundations">Fundaciones</button><button data-view="more">Más info</button></div>
+    </section>
+
+    <section id="moreInfoView" class="panel more-info-view" hidden>
+      <div class="more-view-heading"><div><span>VISIÓN GENERAL</span><h2>Más información del impacto social</h2><p>Resumen consolidado de instituciones educativas y fundaciones conectadas por FIBRAZO.</p></div></div>
+      <div id="moreInfoContent"></div>
     </section>
 
     <section class="filters panel">
@@ -64,10 +69,9 @@
       <div class="section-title records-head"><div><span>BASE DETALLADA</span><h2 id="tableTitle">Instituciones educativas</h2></div><input id="searchInput" type="search" placeholder="Buscar cliente, institución o sede…"></div>
       <div class="detail-tabs" role="tablist">
         <button class="active" data-detail="summary">Resumen</button>
-        <button data-detail="contact">Información de contacto</button>
-        <button data-detail="fibrazo">Información FIBRAZO</button>
-        <button data-detail="institution">Información de la institución</button>
-        <button data-detail="more">Más info</button>
+        <button data-detail="fibrazo">Info. FIBRAZO</button>
+        <button data-detail="institution">Info. institucional</button>
+        <button data-detail="contact">Info. de contacto</button>
         <button data-detail="map">Mapa</button>
       </div>
       <div class="table-tools">
@@ -82,7 +86,6 @@
         </div>
       </div>
       <div class="table-wrap" id="tableWrap"><table><thead id="recordsHead"></thead><tbody id="recordsBody"></tbody></table></div>
-      <div id="moreInfoPanel" class="more-info-panel" hidden></div>
       <div id="locationsMapPanel" class="locations-map-panel" hidden>
         <div class="map-summary"><b id="mapCount">0 ubicaciones</b><span>Presiona un marcador para ver el número de cliente, institución y sede.</span></div>
         <div id="locationsMap" aria-label="Mapa de instituciones y fundaciones conectadas"></div>
@@ -90,6 +93,6 @@
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
-  <script src="app.js?v=20260713-15"></script>
+  <script src="app.js?v=20260713-16"></script>
 </body>
 </html>
