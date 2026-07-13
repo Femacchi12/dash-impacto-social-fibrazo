@@ -85,26 +85,35 @@ function renderLocationsMap(rs){
  $('#mapCount').innerHTML='<a class="my-maps-title-link" href="https://www.google.com/maps/d/u/0/edit?mid=1IP8S422GKdDmvrAtU0ZPTR7ql9P3CUs&ll=9.984108371108164%2C-75.01877050081453&z=8" target="_blank" rel="noopener">Dash-impacto-social-fibrazo ↗</a>';
  $('#locationsMap').innerHTML='<iframe class="my-maps-frame" title="Mapa de instituciones educativas y fundaciones" src="https://www.google.com/maps/d/embed?mid=1IP8S422GKdDmvrAtU0ZPTR7ql9P3CUs&ehbc=2E312F" loading="lazy" allowfullscreen></iframe>';
 }
-function renderMoreInfo(rs){
- const panel=$('#moreInfoPanel');panel.hidden=detailTab!=='more';if(detailTab!=='more')return;
- const foundation=currentOrg()==='foundation';
+function renderMainMoreInfo(){
+ const isMore=view==='more',panel=$('#moreInfoView');
+ panel.hidden=!isMore;
+ const dashboardSections=['.filters','#kpis','.charts','.connectivity','.school-size','.records'];
+ dashboardSections.forEach(selector=>{const el=$(selector);if(el)el.hidden=isMore});
+ if(!isMore)return false;
+ const rs=DATA.slice();
+ const uniqueOrgs=new Set(rs.map(d=>(d.org+'|'+clean(d.institution)).toLowerCase())).size;
+ const education=rs.filter(d=>d.org==='education').length,foundations=rs.filter(d=>d.org==='foundation').length;
  const multi=rs.filter(d=>Number(d.services)>1).length;
  const principals=rs.filter(d=>d.type==='Principal').length;
  const sites=rs.filter(d=>d.type==='Sede').length;
  const extra=rs.reduce((sum,d)=>sum+Math.max(0,(Number(d.services)||0)-1),0);
- const group=(key)=>Object.entries(rs.reduce((acc,d)=>{const value=clean(d[key])||'Sin información';acc[value]=(acc[value]||0)+1;return acc},{})).sort((a,b)=>b[1]-a[1]);
- const bars=(items)=>items.map(([label,count])=>'<div class="more-bar"><span>'+esc(label)+'</span><i><b style="width:'+Math.max(4,Math.round(count/Math.max(1,items[0][1])*100))+'%"></b></i><strong>'+fmt(count)+'</strong></div>').join('');
+ const people=rs.reduce((sum,d)=>sum+(Number(d.people)||0),0);
+ const cities=new Set(rs.map(d=>d.city).filter(Boolean)).size;
+ const group=(key,rows=rs)=>Object.entries(rows.reduce((acc,d)=>{const value=clean(d[key])||'Sin información';acc[value]=(acc[value]||0)+1;return acc},{})).sort((a,b)=>b[1]-a[1]);
+ const bars=(items)=>items.map(([label,count])=>'<div class="more-bar"><span>'+esc(label)+'</span><i><b style="width:'+Math.max(4,Math.round(count/Math.max(1,items[0]?.[1]||1)*100))+'%"></b></i><strong>'+fmt(count)+'</strong></div>').join('');
  const services=group('services').map(([label,count])=>[(label==='Sin información'?label:label+' servicio'+(label==='1'?'':'s')),count]);
- panel.innerHTML='<div class="more-kpis"><article><span>'+(foundation?'Centros':'Sedes')+' con más de un servicio</span><strong>'+fmt(multi)+'</strong><small>Resultado con filtros aplicados</small></article><article><span>Servicios adicionales</span><strong>'+fmt(extra)+'</strong><small>Por encima del primer servicio</small></article><article><span>Principales instaladas</span><strong>'+fmt(principals)+'</strong><small>Sedes principales</small></article><article><span>Sedes instaladas</span><strong>'+fmt(sites)+'</strong><small>'+(foundation?'Centros asociados':'Sedes educativas')+'</small></article></div><div class="more-grids"><section><span class="eyebrow">TIPO DE ADMINISTRACIÓN</span><h3>Distribución de organizaciones</h3>'+bars(group('administration'))+'</section><section><span class="eyebrow">SERVICIOS INSTALADOS</span><h3>Distribución por cantidad</h3>'+bars(services)+'</section></div>';
+ const orgTypes=[['Instituciones educativas',education],['Fundaciones',foundations]];
+ $('#moreInfoContent').innerHTML='<div class="more-hero-kpis"><article class="featured"><span>Ubicaciones conectadas</span><strong>'+fmt(rs.length)+'</strong><small>'+fmt(uniqueOrgs)+' organizaciones beneficiadas</small></article><article><span>Alumnos y beneficiarios</span><strong>'+fmt(people)+'</strong><small>Impacto social acumulado</small></article><article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong><small>Cobertura territorial</small></article></div><div class="more-kpis"><article><span>Sedes con más de un servicio</span><strong>'+fmt(multi)+'</strong><small>Instalaciones múltiples</small></article><article><span>Servicios adicionales</span><strong>'+fmt(extra)+'</strong><small>Por encima del primer servicio</small></article><article><span>Principales instaladas</span><strong>'+fmt(principals)+'</strong><small>Sedes principales</small></article><article><span>Sedes instaladas</span><strong>'+fmt(sites)+'</strong><small>Sedes y centros asociados</small></article></div><div class="more-grids wide"><section><span class="eyebrow">TIPO DE ORGANIZACIÓN</span><h3>Composición de la base</h3>'+bars(orgTypes)+'</section><section><span class="eyebrow">SERVICIOS INSTALADOS</span><h3>Distribución por cantidad</h3>'+bars(services)+'</section><section class="administration-wide"><span class="eyebrow">TIPO DE ADMINISTRACIÓN</span><h3>Distribución de organizaciones</h3>'+bars(group('administration'))+'</section></div>';
+ return true;
 }
 function renderTable(){
  const foundation=currentOrg()==='foundation';
  let rs=filtered(true).slice();
- const special=detailTab==='map'||detailTab==='more';
+ const special=detailTab==='map';
  $('.table-tools').hidden=special;$('#tableWrap').hidden=special;
- renderLocationsMap(rs);renderMoreInfo(rs);
+ renderLocationsMap(rs);
  if(detailTab==='map'){$('#tableTitle').textContent=foundation?'Mapa de fundaciones':'Mapa de instituciones educativas';return}
- if(detailTab==='more'){$('#tableTitle').textContent=foundation?'Más información de fundaciones':'Más información de instituciones educativas';return}
  const columns=activeColumns();
  if(sortKey&&DETAIL[detailTab].some(c=>c[0]===sortKey))rs.sort((a,b)=>{const x=sortValue(a,sortKey),y=sortValue(b,sortKey);const result=typeof x==='number'?x-y:String(x).localeCompare(String(y),'es',{numeric:true});return sortDirection==='asc'?result:-result});
  $('#tableTitle').textContent=foundation?'Fundaciones conectadas':'Instituciones educativas conectadas';
@@ -113,11 +122,11 @@ function renderTable(){
  $('#recordsBody').innerHTML=rs.length?rs.map(d=>'<tr>'+columns.map(c=>'<td class="'+(c[0]==='institution'?'institution-cell':c[0]==='site'?'site-cell':'')+'">'+cell(d,c[0])+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+Math.max(1,columns.length)+'" class="empty">No hay resultados para estos filtros.</td></tr>';
  renderColumnsMenu();
 }
-function render(){renderKpis();renderGrowth();renderCities();renderConnectivity();renderSizes();renderTable()}
+function render(){if(renderMainMoreInfo())return;renderKpis();renderGrowth();renderCities();renderConnectivity();renderSizes();renderTable()}
 Object.entries(filters).forEach(([name,el])=>el.addEventListener('change',()=>{if(name==='city')syncOptions('city');render()}));
 $('#searchInput').addEventListener('input',renderTable);
 $('#clearFilters').addEventListener('click',()=>{filters.site.value='all';filters.size.value='all';filters.internet.value='all';filters.services.value='all';$('#searchInput').value='';fillSelect(filters.city,unique('city',baseOrg()),'Todas');filters.city.value='all';fillSelect(filters.zone,unique('zone',baseOrg()),'Todas');filters.zone.value='all';view='schools';period='year';$$('.view-switch button').forEach((b,i)=>b.classList.toggle('active',i===0));[...document.querySelectorAll('.period-switch button')].forEach((b,i)=>b.classList.toggle('active',i===0));[...document.querySelectorAll('.chart-switch button')].forEach((b,i)=>b.classList.toggle('active',i===0));chartType='bar';render()});
-$$('.view-switch button').forEach(b=>b.addEventListener('click',()=>{$$('.view-switch button').forEach(x=>x.classList.remove('active'));b.classList.add('active');view=b.dataset.view;filters.city.value='all';filters.zone.value='all';syncOptions();render()}));
+$$('.view-switch button').forEach(b=>b.addEventListener('click',()=>{$$('.view-switch button').forEach(x=>x.classList.remove('active'));b.classList.add('active');view=b.dataset.view;filters.city.value='all';filters.zone.value='all';if(view!=='more')syncOptions();render()}));
 [...document.querySelectorAll('.period-switch button')].forEach(b=>b.addEventListener('click',()=>{[...document.querySelectorAll('.period-switch button')].forEach(x=>x.classList.remove('active'));b.classList.add('active');period=b.dataset.period;renderGrowth()}));
 [...document.querySelectorAll('.chart-switch button')].forEach(b=>b.addEventListener('click',()=>{[...document.querySelectorAll('.chart-switch button')].forEach(x=>x.classList.remove('active'));b.classList.add('active');chartType=b.dataset.chart;renderGrowth()}));
 [...document.querySelectorAll('.detail-tabs button')].forEach(b=>b.addEventListener('click',()=>{[...document.querySelectorAll('.detail-tabs button')].forEach(x=>x.classList.remove('active'));b.classList.add('active');detailTab=b.dataset.detail;sortKey='';sortDirection='asc';$('#columnsMenu').hidden=true;$('#columnsButton').setAttribute('aria-expanded','false');renderTable()}));
