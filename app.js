@@ -39,7 +39,7 @@ function renderGrowth(){
  $('#growthTitle').textContent='Crecimiento de '+(view==='foundations'?'fundaciones':view==='schools'?'sedes':'alumnos');
  const chart=$('#growthChart');chart.classList.toggle('monthly',period==='month');chart.classList.toggle('line-mode',chartType==='line');
  if(!arr.length){chart.innerHTML='<p class="empty">No hay cambios para estos filtros.</p>';return}
- const width=Math.max(640,arr.length*(period==='month'?92:125)),height=285,pad={left:62,right:24,top:28,bottom:62},plotW=width-pad.left-pad.right,plotH=height-pad.top-pad.bottom,max=Math.max(1,...arr.map(x=>x.value));
+ const width=Math.max(760,arr.length*(period==='month'?118:150)),height=340,pad={left:62,right:24,top:28,bottom:62},plotW=width-pad.left-pad.right,plotH=height-pad.top-pad.bottom,max=Math.max(1,...arr.map(x=>x.value));
  const x=i=>pad.left+(arr.length===1?plotW/2:i*plotW/(arr.length-1)),y=v=>pad.top+plotH-v/max*plotH;
  const ticks=[0,.25,.5,.75,1],grid=ticks.map(t=>{const val=Math.round(max*t),py=y(val);return '<line class="growth-gridline" x1="'+pad.left+'" y1="'+py+'" x2="'+(width-pad.right)+'" y2="'+py+'"></line><text class="growth-y-label" x="'+(pad.left-10)+'" y="'+(py+4)+'" text-anchor="end">'+fmt(val)+'</text>'}).join('');
  const labels=arr.map((d,i)=>'<text class="growth-x-label" transform="translate('+x(i)+','+(height-34)+') rotate('+(period==='month'?-32:0)+')" text-anchor="'+(period==='month'?'end':'middle')+'">'+esc(d.label)+'</text>').join('');
