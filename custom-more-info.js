@@ -42,10 +42,11 @@ renderMainMoreInfo=function(){
  dashboardSections.forEach(selector=>{const el=$(selector);if(el)el.hidden=isMore});
  if(!isMore)return false;
 
- const rs=filtered();
+ /* “Más info” usa exclusivamente instituciones educativas; excluye fundaciones. */
+ const rs=filtered().filter(d=>d.org==='education');
  const total=rs.length;
  const pct=n=>total?((n/total)*100).toFixed(1).replace('.',',')+'%':'0%';
- const uniqueOrgs=new Set(rs.map(d=>(d.org+'|'+clean(d.institution)).toLowerCase())).size;
+ const uniqueOrgs=new Set(rs.map(d=>clean(d.institution).toLowerCase())).size;
  const multi=rs.filter(d=>Number(d.services)>1).length;
  const principals=rs.filter(d=>d.type==='Principal').length;
  const sites=rs.filter(d=>d.type==='Sede').length;
@@ -68,19 +69,19 @@ renderMainMoreInfo=function(){
 
  $('#moreInfoContent').innerHTML=
  '<div class="more-hero-kpis">'+
-   '<article class="featured"><span>Ubicaciones conectadas</span><strong>'+fmt(total)+'</strong><small>'+fmt(uniqueOrgs)+' organizaciones beneficiadas</small></article>'+
-   '<article><span>Alumnos y beneficiarios</span><strong>'+fmt(people)+'</strong><small>Impacto social acumulado</small></article>'+
+   '<article class="featured"><span>Escuelas conectadas</span><strong>'+fmt(total)+'</strong><small>'+fmt(uniqueOrgs)+' instituciones educativas beneficiadas</small></article>'+
+   '<article><span>Alumnos</span><strong>'+fmt(people)+'</strong><small>Impacto educativo acumulado</small></article>'+
    '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong><small>Cobertura territorial</small></article>'+
  '</div>'+
  '<div class="more-kpis">'+
-   '<article><span>Sedes con más de un servicio</span><strong>'+fmt(multi)+'</strong><small>'+pct(multi)+' de las ubicaciones</small></article>'+
+   '<article><span>Sedes con más de un servicio</span><strong>'+fmt(multi)+'</strong><small>'+pct(multi)+' de las escuelas</small></article>'+
    '<article><span>Servicios adicionales</span><strong>'+fmt(extra)+'</strong><small>Por encima del primer servicio</small></article>'+
    '<article><span>Principales instaladas</span><strong>'+fmt(principals)+'</strong><small>'+pct(principals)+' del total</small></article>'+
    '<article><span>Sedes instaladas</span><strong>'+fmt(sites)+'</strong><small>'+pct(sites)+' del total</small></article>'+
  '</div>'+
  '<div class="more-grids wide" style="grid-template-columns:1fr">'+
    '<section><span class="eyebrow">SERVICIOS INSTALADOS</span><h3>Distribución por cantidad</h3>'+donut(services,'Total')+'</section>'+
-   '<section><span class="eyebrow">TIPO DE ADMINISTRACIÓN</span><h3>Distribución de organizaciones</h3>'+donut(administrations,'Total')+'</section>'+
+   '<section><span class="eyebrow">TIPO DE ADMINISTRACIÓN</span><h3>Distribución de escuelas</h3>'+donut(administrations,'Total')+'</section>'+
  '</div>';
  return true;
 };
