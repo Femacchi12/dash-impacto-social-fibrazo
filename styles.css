@@ -937,3 +937,6 @@ td{font-size:12px}
  .more-grids.wide .administration-wide{grid-column:auto}
  .more-grids.wide .administration-wide .more-bar{grid-template-columns:minmax(105px,1fr) 1.5fr 34px}
 }
+
+/* Ocultamiento consistente para vistas dinámicas */
+[hidden]{display:none!important}
