@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260712-3">
+  <link rel="stylesheet" href="styles.css?v=20260713-1">
 </head>
 <body>
   <main>
@@ -64,10 +64,21 @@
         <button data-detail="fibrazo">Información FIBRAZO</button>
         <button data-detail="institution">Información de la institución</button>
       </div>
-      <div class="table-wrap"><table><thead id="recordsHead"></thead><tbody id="recordsBody"></tbody></table></div>
+      <div class="table-tools">
+        <p><b id="recordCount">0 registros</b><span>Desplaza la tabla con los botones, el scroll inferior o Shift + rueda del mouse.</span></p>
+        <div class="table-actions">
+          <button id="scrollLeft" class="outline" type="button">← Izquierda</button>
+          <button id="scrollRight" class="outline" type="button">Derecha →</button>
+          <div class="column-picker">
+            <button id="columnsButton" class="outline" type="button" aria-expanded="false">Columnas ▾</button>
+            <div id="columnsMenu" class="columns-menu" hidden></div>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap" id="tableWrap"><table><thead id="recordsHead"></thead><tbody id="recordsBody"></tbody></table></div>
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span>Fuente: Base_Esc-Fund.</span></footer>
-  <script src="app.js?v=20260712-4"></script>
+  <script src="app.js?v=20260713-1"></script>
 </body>
 </html>
