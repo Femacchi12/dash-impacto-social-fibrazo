@@ -51,6 +51,7 @@ renderMainMoreInfo=function(){
  const principals=rs.filter(d=>d.type==='Principal').length;
  const sites=rs.filter(d=>d.type==='Sede').length;
  const extra=rs.reduce((sum,d)=>sum+Math.max(0,(Number(d.services)||0)-1),0);
+ const totalServices=total+extra;
  const people=rs.reduce((sum,d)=>sum+(Number(d.people)||0),0);
  const cities=new Set(rs.map(d=>d.city).filter(Boolean)).size;
  const groupItems=(key)=>Object.entries(rs.reduce((acc,d)=>{const value=clean(d[key])||'Sin información';acc[value]=(acc[value]||0)+1;return acc},{})).sort((a,b)=>b[1]-a[1]);
@@ -74,6 +75,7 @@ renderMainMoreInfo=function(){
    '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong><small>Cobertura territorial</small></article>'+
  '</div>'+
  '<div class="more-kpis">'+
+   '<article><span>Total de servicios instalados</span><strong>'+fmt(totalServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales</small></article>'+
    '<article><span>Sedes con más de un servicio</span><strong>'+fmt(multi)+'</strong><small>'+pct(multi)+' de las escuelas</small></article>'+
    '<article><span>Servicios adicionales</span><strong>'+fmt(extra)+'</strong><small>Por encima del primer servicio</small></article>'+
    '<article><span>Principales instaladas</span><strong>'+fmt(principals)+'</strong><small>'+pct(principals)+' del total</small></article>'+
