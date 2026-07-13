@@ -958,3 +958,6 @@ td{font-size:12px}
  .more-pie{width:165px}
  .more-pie-legend{width:100%}
 }
+
+/* Porcentaje de percepción del servicio previo */
+.quality em{display:block;margin-top:5px;color:#82dcb5;font-size:11px;font-style:normal;font-weight:700}
