@@ -142,3 +142,18 @@ main,.charts,.chart-card,.growth-panel{min-width:0;max-width:100%}
 .records .cell-text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;max-height:2.6em;line-height:1.3;overflow:hidden;white-space:normal;overflow-wrap:anywhere;text-overflow:clip}
 .records a.cell-text{color:inherit}
 @media(max-width:760px){.records td{padding:7px 8px}.records td.institution-cell{min-width:200px;max-width:245px}.records td.site-cell{min-width:135px;max-width:185px}}
+
+/* Encabezados verdes y mapa de ubicaciones */
+.records th{color:var(--green);font-weight:700}
+.records .sort-button{color:var(--green)}
+.map-link{display:inline-flex;align-items:center;padding:4px 8px;border:1px solid #00f29a77;border-radius:10px;color:var(--green);font-weight:700;text-decoration:none}
+.map-link:hover{background:#00f29a18}
+.locations-map-panel{padding:0 20px 20px}
+.locations-map-panel[hidden],.table-tools[hidden],.table-wrap[hidden]{display:none!important}
+.map-summary{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px;margin:0 0 10px}
+.map-summary b{color:var(--green);font-size:12px}
+#locationsMap{height:540px;border:1px solid #1b4b38;border-radius:16px;background:#0b1511;overflow:hidden}
+.map-popup{display:flex;flex-direction:column;gap:5px;min-width:190px;color:#122018}.map-popup b{font-size:13px}.map-popup span{font-size:11px}.map-popup a{color:#007c50;font-weight:700}
+.leaflet-control-attribution{font-size:8px!important}
+.map-empty{padding:45px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+@media(max-width:760px){.locations-map-panel{padding:0 12px 12px}.map-summary{flex-direction:column}#locationsMap{height:430px}}
