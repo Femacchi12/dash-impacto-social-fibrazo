@@ -75,7 +75,7 @@ renderMainMoreInfo=function(){
    '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong></article>'+
  '</div>'+
  '<div class="more-kpis services-summary-grid">'+
-   '<article><span>Total de servicios instalados en fundaciones</span><strong>'+fmt(foundationServices)+'</strong><small>'+fmt(foundationBase)+' fundaciones'+(foundationExtra?' + '+fmt(foundationExtra)+' adicionales':'')+'</small></article>'+
+   '<article><span>Fundaciones conectadas</span><strong>'+fmt(foundationServices)+'</strong><small>'+fmt(foundationServices)+' servicios instalados</small></article>'+
    '<article><span>Total de servicios instalados en escuelas</span><strong>'+fmt(totalServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales</small></article>'+
    '<article><span>Total de servicios instalados</span><strong>'+fmt(overallServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales + '+fmt(foundationServices)+' fundaciones</small></article>'+
    '<article><span>Servicios adicionales en escuelas</span><strong>'+fmt(extra)+'</strong><small>Por encima del primer servicio</small></article>'+
