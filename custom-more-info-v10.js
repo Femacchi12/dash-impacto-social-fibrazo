@@ -72,7 +72,7 @@ renderMainMoreInfo=function(){
  '<div class="more-hero-kpis">'+
    '<article class="featured"><span>Escuelas conectadas</span><strong>'+fmt(total)+'</strong><small>'+fmt(uniqueOrgs)+' instituciones educativas beneficiadas</small></article>'+
    '<article><span>Alumnos conectados</span><strong>'+fmt(people)+'</strong></article>'+
-   '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong><small>Cobertura territorial</small></article>'+
+   '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong></article>'+
  '</div>'+
  '<div class="more-kpis services-summary-grid">'+
    '<article class="service-total"><span>Total de servicios instalados</span><strong>'+fmt(overallServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales + '+fmt(foundationServices)+' fundaciones</small></article>'+
