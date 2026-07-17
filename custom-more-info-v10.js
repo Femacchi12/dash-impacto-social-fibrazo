@@ -71,7 +71,7 @@ renderMainMoreInfo=function(){
  $('#moreInfoContent').innerHTML=
  '<div class="more-hero-kpis">'+
    '<article class="featured"><span>Escuelas conectadas</span><strong>'+fmt(total)+'</strong><small>'+fmt(uniqueOrgs)+' instituciones educativas beneficiadas</small></article>'+
-   '<article><span>Alumnos</span><strong>'+fmt(people)+'</strong><small>Impacto educativo acumulado</small></article>'+
+   '<article><span>Alumnos conectados</span><strong>'+fmt(people)+'</strong></article>'+
    '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong><small>Cobertura territorial</small></article>'+
  '</div>'+
  '<div class="more-kpis services-summary-grid">'+
