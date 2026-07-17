@@ -84,7 +84,7 @@ renderMainMoreInfo=function(){
    '<article><span>Escuelas “sedes” instaladas</span><strong>'+fmt(sites)+'</strong><small>'+pct(sites)+' del total</small></article>'+
  '</div>'+
  '<div class="more-grids wide" style="grid-template-columns:1fr">'+
-   '<section><span class="eyebrow">SERVICIOS INSTALADOS</span><h3>Distribución por cantidad</h3>'+donut(services,'Total')+'</section>'+
+   '<section><span class="eyebrow">SERVICIOS INSTALADOS EN ESCUELAS</span><h3>Distribución por cantidad</h3>'+donut(services,'Total')+'</section>'+
    '<section><span class="eyebrow">TIPO DE ADMINISTRACIÓN</span><h3>Distribución de escuelas</h3>'+donut(administrations,'Total')+'</section>'+
  '</div>';
  return true;
