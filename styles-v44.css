@@ -1285,3 +1285,20 @@ td{font-size:12px}
   .filter-header-actions .view-switch{width:100%}
   .filter-header-actions #clearFilters{width:100%}
 }
+
+
+/* Desplazamiento vertical interno al expandir la base detallada */
+.table-wrap.rows-expanded{
+  max-height:min(68vh,720px);
+  overflow-y:auto;
+  overscroll-behavior-block:contain;
+  scrollbar-gutter:stable;
+}
+.table-wrap.rows-expanded thead th{
+  position:sticky;
+  top:0;
+  z-index:4;
+}
+@media(max-width:760px){
+  .table-wrap.rows-expanded{max-height:65vh}
+}
