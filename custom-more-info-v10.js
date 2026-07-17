@@ -70,14 +70,14 @@ renderMainMoreInfo=function(){
 
  $('#moreInfoContent').innerHTML=
  '<div class="more-hero-kpis">'+
-   '<article class="featured"><span>Escuelas conectadas</span><strong>'+fmt(total)+'</strong><small>'+fmt(uniqueOrgs)+' instituciones educativas beneficiadas</small></article>'+
-   '<article><span>Alumnos</span><strong>'+fmt(people)+'</strong><small>Impacto educativo acumulado</small></article>'+
-   '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong><small>Cobertura territorial</small></article>'+
+   '<article><span>Escuelas conectadas</span><strong>'+fmt(total)+'</strong><small>'+fmt(uniqueOrgs)+' instituciones educativas beneficiadas</small></article>+
+   '<article><span>Alumnos conectados</span><strong>'+fmt(people)+'</strong></article>+
+   '<article><span>Ciudades con presencia</span><strong>'+fmt(cities)+'</strong></article>+
  '</div>'+
  '<div class="more-kpis services-summary-grid">'+
-   '<article class="service-total"><span>Total de servicios instalados</span><strong>'+fmt(overallServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales + '+fmt(foundationServices)+' fundaciones</small></article>'+
+   '<article><span>Total de servicios instalados en fundaciones</span><strong>'+fmt(foundationServices)+'</strong></article>'+
    '<article><span>Total de servicios instalados en escuelas</span><strong>'+fmt(totalServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales</small></article>'+
-   '<article><span>Total de servicios instalados en fundaciones</span><strong>'+fmt(foundationServices)+'</strong><small>'+fmt(foundationBase)+' fundaciones'+(foundationExtra?' + '+fmt(foundationExtra)+' adicionales':'')+'</small></article>'+
+   '<article><span>Total de servicios instalados</span><strong>'+fmt(overallServices)+'</strong><small>'+fmt(total)+' servicios base + '+fmt(extra)+' adicionales + '+fmt(foundationServices)+' fundaciones</small></article>+
    '<article><span>Escuelas con más de un servicio</span><strong>'+fmt(multi)+'</strong><small>'+pct(multi)+' de las escuelas</small></article>'+
    '<article><span>Servicios adicionales en escuelas</span><strong>'+fmt(extra)+'</strong><small>Por encima del primer servicio</small></article>'+
    '<article><span>Escuelas “principales” instaladas</span><strong>'+fmt(principals)+'</strong><small>'+pct(principals)+' del total</small></article>'+
@@ -89,5 +89,17 @@ renderMainMoreInfo=function(){
  '</div>';
  return true;
 };
+
+const selectableCards=$('#moreInfoContent');
+if(selectableCards&&!selectableCards.dataset.cardSelectionReady){
+ selectableCards.dataset.cardSelectionReady='true';
+ selectableCards.addEventListener('click',event=>{
+  const card=event.target.closest('.more-hero-kpis article,.services-summary-grid article');
+  if(!card)return;
+  const wasSelected=card.classList.contains('selected-card');
+  selectableCards.querySelectorAll('article.selected-card').forEach(item=>item.classList.remove('selected-card'));
+  if(!wasSelected)card.classList.add('selected-card');
+ });
+}
 
 render();
