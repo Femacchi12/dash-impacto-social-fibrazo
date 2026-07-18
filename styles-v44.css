@@ -692,7 +692,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* Base detallada por pestañas */
 .records-head{padding-bottom:14px!important}
 .detail-tabs{display:flex;gap:7px;padding:0 20px 16px;overflow-x:auto;border-bottom:1px solid #17251f}
-.detail-tabs button{border:1px solid #244137;background:#0d1713;color:var(--muted);padding:9px 13px;border-radius:10px;font:700 10px Inter,sans-serif;white-space:nowrap;cursor:pointer}
+.detail-tabs button{border:1px solid #244137;background:#0d1713;color:var(--muted);padding:9px 13px;border-radius:10px;font:700 12px Inter,sans-serif;white-space:nowrap;cursor:pointer}
 .detail-tabs button.active{background:var(--green);border-color:var(--green);color:#002014}
 .client-link{display:inline-block;color:#001b10;background:var(--green);padding:5px 9px;border-radius:8px;font-weight:800;text-decoration:none}
 .client-link:hover{filter:brightness(1.1);transform:translateY(-1px)}
@@ -718,7 +718,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .update-cards.single{grid-template-columns:1fr;width:min(350px,34%)}
 .update-cards.single article{display:grid;grid-template-columns:1fr auto;grid-template-areas:"label button" "date button";align-items:center;column-gap:18px}
 .update-cards.single span{grid-area:label}.update-cards.single b{grid-area:date}
-.refresh-button{grid-area:button;border:1px solid var(--green);background:var(--green);color:#002014;border-radius:10px;padding:9px 13px;font:800 10px Inter,sans-serif;cursor:pointer}
+.refresh-button{grid-area:button;border:1px solid var(--green);background:var(--green);color:#002014;border-radius:10px;padding:9px 13px;font:800 12px Inter,sans-serif;cursor:pointer}
 .refresh-button:hover{filter:brightness(1.08)}
 
 /* Tamaño de escuelas */
@@ -1324,3 +1324,7 @@ footer .source-link:focus-visible{
   fill:var(--green);
   font-weight:800;
 }
+
+
+/* Tamaño uniforme para las notas de base de los gráficos */
+.scope-note{font-size:12px}
