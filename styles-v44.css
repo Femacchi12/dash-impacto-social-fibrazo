@@ -1318,25 +1318,8 @@ footer .source-link:focus-visible{
 }
 
 
-/* Marca del valor vigente en la evolución temporal */
-.growth-current-marker{pointer-events:none}
-.growth-current-marker line{
-  stroke:var(--green);
-  stroke-width:1.2;
-  stroke-dasharray:5 5;
-  opacity:.42;
-}
-.growth-current-marker rect{
-  fill:#082119;
-  stroke:var(--green);
-  stroke-width:1;
-}
-.growth-current-marker text{
-  fill:var(--green);
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:.08em;
-}
+
+/* Fecha actual añadida como último punto temporal */
 .growth-x-label.current{
   fill:var(--green);
   font-weight:800;
