@@ -101,9 +101,10 @@ function renderGrowth(){
  const rs=filtered(),schoolAll=periodGroups(rs,'schools'),peopleAll=periodGroups(rs,'people');
  let arr=schoolAll.map((item,i)=>({...item,schools:item.value,people:peopleAll[i]?.value||0}));
  if(period==='month')arr=arr.filter((x,i)=>{const prev=i?schoolAll[i-1]:{value:0},prevPeople=i?peopleAll[i-1]:{value:0};return metricMode==='both'?x.schools!==prev.value||x.people!==prevPeople.value:metricMode==='people'?x.people!==prevPeople.value:x.schools!==prev.value});
- if(arr.length){
+ if(arr.length&&period==='month'){
   const latest=arr[arr.length-1];
-  const currentDate=new Intl.DateTimeFormat('es-CO',{day:'2-digit',month:'short',year:'2-digit',timeZone:'America/Bogota'}).format(new Date()).replace(/\./g,'');
+  const formattedDate=new Intl.DateTimeFormat('es-CO',{month:'short',year:'2-digit',timeZone:'America/Bogota'}).format(new Date()).replace(/\./g,'');
+  const currentDate=formattedDate.charAt(0).toUpperCase()+formattedDate.slice(1);
   arr=[...arr,{key:'current',label:currentDate,schools:latest.schools,people:latest.people,isCurrent:true}];
  }
  const foundation=view==='foundations',mode=foundation?'schools':metricMode;
