@@ -1328,3 +1328,29 @@ footer .source-link:focus-visible{
 
 /* Tamaño uniforme para las notas de base de los gráficos */
 .scope-note{font-size:12px}
+
+
+/* IDs compactos para segundo y tercer servicio */
+.records td:has(.cell-text > .client-link) .cell-text{
+  display:block;
+  max-height:2.8em;
+  line-height:1.4;
+  overflow:hidden;
+  white-space:normal;
+  overflow-wrap:normal;
+}
+.records td:has(.cell-text > .client-link) .client-link{
+  margin:1px 3px;
+  padding:2px 5px;
+  border-radius:6px;
+  font-size:10px;
+  line-height:1.2;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .records td:has(.cell-text > .client-link) .client-link{
+    font-size:10px;
+    padding:2px 4px;
+  }
+}
