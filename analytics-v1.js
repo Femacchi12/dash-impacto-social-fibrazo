@@ -35,7 +35,7 @@ document.addEventListener("click",event=>{
   if(!target) return;
   if(target.id==="clearFilters") send("limpiar_filtros");
   else if(target.id==="refreshDashboard") send("actualizar_datos");
-  else if(target.id==="showMoreRows") send(target.getAttribute("aria-expanded")==="true"?"ver_menos":"ver_mas");
+  else if(target.id==="showMoreRows") send(target.getAttribute("aria-expanded")==="true"?"ver_mas":"ver_menos");
   else if(target.id==="columnsButton") send("selector_columnas");
   else if(target.matches(".view-switch button")) send("seccion_consultada",{seccion:target.dataset.view||textOf(target)});
   else if(target.matches(".detail-tabs button")) send("pestana_detalle",{pestana:target.dataset.detail||textOf(target)});
