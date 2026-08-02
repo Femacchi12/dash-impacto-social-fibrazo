@@ -195,23 +195,42 @@
           showGate("La cuenta " + (user.email || "") + " no tiene acceso a este dashboard.", true);
         });
 
-        signIn.addEventListener("click", async () => {
+        const showAuthError = e => {
+          const code = e && e.code ? e.code : "error-desconocido";
+          const messages = {
+            "auth/unauthorized-domain": "Este dominio todavía no está autorizado en Firebase.",
+            "auth/operation-not-allowed": "El acceso con Google no está habilitado en Firebase.",
+            "auth/network-request-failed": "No se pudo conectar con Google. Revisa la conexión e intenta nuevamente.",
+            "auth/too-many-requests": "Google bloqueó temporalmente varios intentos. Espera un momento e intenta de nuevo."
+          };
+          error.textContent = (messages[code] || "No fue posible iniciar sesión.") + " (" + code + ")";
+        };
+
+        const startGoogleSignIn = async () => {
           error.textContent = "";
-          try { await auth.signInWithPopup(provider); }
-          catch (e) {
-            if (e.code === "auth/popup-blocked") {
+          signIn.disabled = true;
+          try {
+            await auth.signInWithPopup(provider);
+          } catch (popupError) {
+            if (popupError && popupError.code === "auth/popup-closed-by-user") {
+              signIn.disabled = false;
+              return;
+            }
+            try {
               await auth.signInWithRedirect(provider);
-            } else if (e.code !== "auth/popup-closed-by-user") {
-              error.textContent = "No fue posible iniciar sesión. Intenta nuevamente.";
+              return;
+            } catch (redirectError) {
+              showAuthError(redirectError || popupError);
             }
           }
-        });
+          signIn.disabled = false;
+        };
+
+        auth.getRedirectResult().catch(showAuthError);
+        signIn.addEventListener("click", startGoogleSignIn);
         changeAccount.addEventListener("click", async () => {
           await auth.signOut();
-          try { await auth.signInWithPopup(provider); }
-          catch (e) {
-            if (e.code === "auth/popup-blocked") await auth.signInWithRedirect(provider);
-          }
+          await startGoogleSignIn();
         });
         signOutButton.addEventListener("click", () => auth.signOut());
       } catch (e) {
@@ -221,6 +240,6 @@
       }
     })();
   </script>
-  <!-- deploy-refresh: 2026.08.02.auth -->
+  <!-- deploy-refresh: 2026.08.02.auth-fallback -->
 </body>
 </html>
