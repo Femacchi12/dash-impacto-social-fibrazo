@@ -17,8 +17,33 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles-v44.css?v=2026.07.21.3">
+  <style>
+    body.auth-pending > main, body.auth-pending > footer { display: none !important; }
+    .auth-gate { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #050807; color: #fff; font-family: Inter, sans-serif; }
+    .auth-gate[hidden] { display: none !important; }
+    .auth-card { width: min(460px, 100%); padding: 36px; border: 1px solid rgba(72,255,153,.28); background: #0b100e; box-shadow: 0 24px 80px rgba(0,0,0,.45); text-align: center; }
+    .auth-brand { color: #49ef91; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .auth-card h1 { margin: 14px 0 10px; font-size: clamp(25px, 5vw, 36px); }
+    .auth-card p { margin: 0 0 24px; color: #b9c5bf; line-height: 1.55; }
+    .auth-button { width: 100%; padding: 13px 18px; border: 1px solid #49ef91; background: #49ef91; color: #051009; font: inherit; font-weight: 800; cursor: pointer; }
+    .auth-button.secondary { margin-top: 10px; background: transparent; color: #49ef91; }
+    .auth-error { min-height: 22px; margin-top: 16px !important; color: #ff8d8d !important; font-size: 14px; }
+    .auth-session { position: fixed; z-index: 9999; right: 14px; bottom: 14px; }
+    .auth-session button { padding: 8px 12px; border: 1px solid rgba(73,239,145,.55); background: rgba(5,8,7,.92); color: #dff7e8; font: 600 12px Inter,sans-serif; cursor: pointer; }
+  </style>
 </head>
-<body>
+<body class="auth-pending">
+  <section id="authGate" class="auth-gate" aria-live="polite">
+    <div class="auth-card">
+      <div class="auth-brand">FIBRAZO · Growth</div>
+      <h1>Dashboard de Impacto Social</h1>
+      <p id="authMessage">Inicia sesión con tu cuenta de Google para continuar.</p>
+      <button id="googleSignIn" class="auth-button" type="button">Continuar con Google</button>
+      <button id="changeAccount" class="auth-button secondary" type="button" hidden>Cambiar de cuenta</button>
+      <p id="authError" class="auth-error"></p>
+    </div>
+  </section>
+  <div id="authSession" class="auth-session" hidden><button id="signOutButton" type="button">Cerrar sesión</button></div>
   <main>
     <header class="hero-header">
       <div class="hero-copy">
@@ -109,6 +134,93 @@
   <script src="app-v57.js?v=2026.07.21.2"></script>
   <script src="custom-more-info-v10.js?v=2026.07.17.11"></script>
   <script src="analytics-v1.js?v=2026.07.21.1"></script>
-  <!-- deploy-refresh: 2026.07.17.3 -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script>
+    (() => {
+      const firebaseConfig = {
+        apiKey: "AIzaSyDBmVNRQmjy_bt2UovRtmZVNoKrCTyNiiU",
+        authDomain: "dashboards-fibrazo.firebaseapp.com",
+        projectId: "dashboards-fibrazo",
+        storageBucket: "dashboards-fibrazo.firebasestorage.app",
+        messagingSenderId: "926517595208",
+        appId: "1:926517595208:web:a9bbaacedd0ca1dfd51c7d"
+      };
+      const allowedException = "fernandoemacchi@gmail.com";
+      const allowedDomain = "@fibrazo.com.co";
+      const gate = document.getElementById("authGate");
+      const message = document.getElementById("authMessage");
+      const error = document.getElementById("authError");
+      const signIn = document.getElementById("googleSignIn");
+      const changeAccount = document.getElementById("changeAccount");
+      const session = document.getElementById("authSession");
+      const signOutButton = document.getElementById("signOutButton");
+
+      const isAllowed = user => {
+        const email = (user && user.email || "").trim().toLowerCase();
+        return user && user.emailVerified && (email === allowedException || email.endsWith(allowedDomain));
+      };
+      const showDashboard = () => {
+        document.body.classList.remove("auth-pending");
+        gate.hidden = true;
+        session.hidden = false;
+        error.textContent = "";
+      };
+      const showGate = (text, denied = false) => {
+        document.body.classList.add("auth-pending");
+        gate.hidden = false;
+        session.hidden = true;
+        message.textContent = text;
+        signIn.hidden = denied;
+        changeAccount.hidden = !denied;
+      };
+
+      try {
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
+
+        auth.onAuthStateChanged(async user => {
+          if (!user) {
+            showGate("Inicia sesión con tu cuenta de Google para continuar.");
+            signIn.hidden = false;
+            changeAccount.hidden = true;
+            return;
+          }
+          if (isAllowed(user)) {
+            showDashboard();
+            return;
+          }
+          showGate("La cuenta " + (user.email || "") + " no tiene acceso a este dashboard.", true);
+        });
+
+        signIn.addEventListener("click", async () => {
+          error.textContent = "";
+          try { await auth.signInWithPopup(provider); }
+          catch (e) {
+            if (e.code === "auth/popup-blocked") {
+              await auth.signInWithRedirect(provider);
+            } else if (e.code !== "auth/popup-closed-by-user") {
+              error.textContent = "No fue posible iniciar sesión. Intenta nuevamente.";
+            }
+          }
+        });
+        changeAccount.addEventListener("click", async () => {
+          await auth.signOut();
+          try { await auth.signInWithPopup(provider); }
+          catch (e) {
+            if (e.code === "auth/popup-blocked") await auth.signInWithRedirect(provider);
+          }
+        });
+        signOutButton.addEventListener("click", () => auth.signOut());
+      } catch (e) {
+        showGate("No fue posible cargar el acceso seguro.");
+        error.textContent = "Actualiza la página e intenta nuevamente.";
+        signIn.hidden = true;
+      }
+    })();
+  </script>
+  <!-- deploy-refresh: 2026.08.02.auth -->
 </body>
 </html>
