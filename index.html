@@ -28,8 +28,10 @@
     .auth-button { width: 100%; padding: 13px 18px; border: 1px solid #49ef91; background: #49ef91; color: #051009; font: inherit; font-weight: 800; cursor: pointer; }
     .auth-button.secondary { margin-top: 10px; background: transparent; color: #49ef91; }
     .auth-error { min-height: 22px; margin-top: 16px !important; color: #ff8d8d !important; font-size: 14px; }
-    .auth-session { position: fixed; z-index: 9999; right: 14px; bottom: 14px; }
-    .auth-session button { padding: 8px 12px; border: 1px solid rgba(73,239,145,.55); background: rgba(5,8,7,.92); color: #dff7e8; font: 600 12px Inter,sans-serif; cursor: pointer; }
+    .auth-session { position: absolute; z-index: 4; right: 30px; bottom: 16px; display: flex; align-items: center; gap: 10px; color: #8fa9a0; font: 10px Inter,sans-serif; }
+    .auth-session[hidden] { display: none !important; }
+    .auth-session button { width: auto; padding: 6px 10px; border: 1px solid rgba(0,242,154,.4); border-radius: 8px; background: rgba(0,242,154,.06); color: #00f29a; font: 700 10px Inter,sans-serif; cursor: pointer; }
+    @media (max-width: 850px) { .auth-session { position: static; margin-top: 16px; justify-content: flex-start; flex-wrap: wrap; } }
   </style>
 </head>
 <body class="auth-pending">
@@ -43,7 +45,6 @@
       <p id="authError" class="auth-error"></p>
     </div>
   </section>
-  <div id="authSession" class="auth-session" hidden><button id="signOutButton" type="button">Cerrar sesión</button></div>
   <main>
     <header class="hero-header">
       <div class="hero-copy">
@@ -53,6 +54,10 @@
       </div>
       <div class="update-cards single">
         <article><span>Última actualización de datos</span><b id="updatedAt">12/07/2026</b><button id="refreshDashboard" class="refresh-button">↻ Actualizar</button></article>
+      </div>
+      <div id="authSession" class="auth-session" hidden>
+        <span id="signedInEmail"></span>
+        <button id="signOutButton" type="button">Cerrar sesión</button>
       </div>
       <div class="orbit" aria-hidden="true"></div>
     </header>
@@ -155,12 +160,14 @@
       const changeAccount = document.getElementById("changeAccount");
       const session = document.getElementById("authSession");
       const signOutButton = document.getElementById("signOutButton");
+      const signedInEmail = document.getElementById("signedInEmail");
 
       const isAllowed = user => {
         const email = (user && user.email || "").trim().toLowerCase();
         return user && user.emailVerified && (email === allowedException || email.endsWith(allowedDomain));
       };
-      const showDashboard = () => {
+      const showDashboard = user => {
+        signedInEmail.textContent = (user && user.email) || "";
         document.body.classList.remove("auth-pending");
         gate.hidden = true;
         session.hidden = false;
@@ -189,7 +196,7 @@
             return;
           }
           if (isAllowed(user)) {
-            showDashboard();
+            showDashboard(user);
             return;
           }
           showGate("La cuenta " + (user.email || "") + " no tiene acceso a este dashboard.", true);
@@ -240,6 +247,6 @@
       }
     })();
   </script>
-  <!-- deploy-refresh: 2026.08.02.fibrazo-domain-fix -->
+  <!-- deploy-refresh: 2026.08.02.session-visual -->
 </body>
 </html>
