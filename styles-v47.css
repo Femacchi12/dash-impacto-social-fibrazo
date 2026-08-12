@@ -1411,3 +1411,8 @@ footer .source-link:focus-visible{
 .comparison-people{opacity:.58}
 .growth-line.comparison-people{stroke-dasharray:7 6}
 @media(max-width:760px){.growth-series-legend{flex-wrap:nowrap;max-height:none}.growth-series-legend span{max-width:78vw}.growth-series-legend em{margin-left:0}}
+
+
+/* Espacio para leyendas de combinaciones extensas */
+.growth-chart:has(.growth-series-legend){height:457px!important;min-height:457px!important}
+@media(max-width:760px){.growth-chart:has(.growth-series-legend){height:399px!important;min-height:399px!important}}
