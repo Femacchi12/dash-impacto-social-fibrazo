@@ -1395,7 +1395,8 @@ footer .source-link:focus-visible{
 .compare-control select{padding:9px 30px 9px 10px;border:1px solid #294137;border-radius:10px;background:#101915;color:var(--text);font:600 11px Inter,sans-serif}
 .growth-series-legend{position:sticky;left:0;z-index:6;display:flex;align-items:center;gap:12px;min-height:34px;padding:8px 12px;overflow-x:auto;background:#08100df2;border-bottom:1px solid #172b22;color:#b9cec5;font-size:10px}
 .growth-series-legend span{display:flex;align-items:center;gap:5px;white-space:nowrap}.growth-series-legend i{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed{height:306px;margin-bottom:-306px}
-.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed svg{height:306px}
+.growth-chart:has(.growth-series-legend){height:399px!important;min-height:399px!important}
+.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed{height:340px;margin-bottom:-340px}
+.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed svg{height:340px}
 .comparison-line{filter:none}.comparison-point{fill:#07110d}.comparison-bar{opacity:.92}
-@media(max-width:760px){.growth-controls{align-items:flex-start}.compare-control{width:100%;justify-content:space-between}.compare-control select{flex:1}.multi-filter-menu{position:fixed;left:12px;right:12px;top:18vh;width:auto;max-width:none}.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed{height:291px;margin-bottom:-291px}.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed svg{height:291px}}
+@media(max-width:760px){.growth-controls{align-items:flex-start}.compare-control{width:100%;justify-content:space-between}.compare-control select{flex:1}.multi-filter-menu{position:fixed;left:12px;right:12px;top:18vh;width:auto;max-width:none}.growth-chart:has(.growth-series-legend){height:384px!important;min-height:384px!important}.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed{height:325px;margin-bottom:-325px}.growth-chart:has(.growth-series-legend) .growth-y-axis-fixed svg{height:325px}}
