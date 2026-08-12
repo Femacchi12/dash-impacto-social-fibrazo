@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles-v46.css?v=2026.08.12.3">
+  <link rel="stylesheet" href="styles-v46.css?v=2026.08.12.4">
   <style>
     body.auth-pending > main, body.auth-pending > footer { display: none !important; }
     .auth-gate { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #050807; color: #fff; font-family: Inter, sans-serif; }
@@ -92,7 +92,7 @@
       <article class="panel chart-card"><div class="section-title"><div><span>EVOLUCIÓN</span><h2 id="growthTitle">Crecimiento acumulado</h2></div><div class="growth-controls">
   <div class="mini-switch metric-switch" aria-label="Métrica"><button class="active" data-metric="schools">Escuelas</button><button data-metric="people">Alumnos</button><button data-metric="both">Ambos</button></div>
   <div class="mini-switch period-switch" aria-label="Periodo"><button class="active" data-period="year">Año</button><button data-period="month">Mes</button></div>
-  <div class="mini-switch chart-switch" aria-label="Tipo de gráfico"><button class="active" data-chart="bar">Barras</button><button data-chart="line">Línea</button></div><label class="compare-control">Comparar por<select id="compareBy"><option value="none">Solo total</option><option value="city">Ciudad</option><option value="zone">Zona FIBRAZO</option><option value="site">Tipo de sede</option><option value="status">Estado</option><option value="size">Tamaño</option><option value="internet">Internet previo</option><option value="services">Servicios instalados</option></select></label>
+  <div class="mini-switch chart-switch" aria-label="Tipo de gráfico"><button class="active" data-chart="bar">Barras</button><button data-chart="line">Línea</button></div>
 </div></div><div id="growthChart" class="growth-chart"></div></article>
       <article class="panel chart-card"><div class="section-title"><div><span>DISTRIBUCIÓN</span><h2>Impacto por ciudad</h2></div></div><div id="cityChart" class="bar-chart"></div></article>
     </section>
@@ -136,7 +136,7 @@
     </section>
   </main>
   <footer>FIBRAZO · Growth & Socialización <span><a class="source-link" href="https://docs.google.com/spreadsheets/d/1symwDNHvlE6cL4wPivai-Hc12uC5ZturLFHRlHw5QaY/edit?gid=962581413#gid=962581413" target="_blank" rel="noopener noreferrer">Fuente: Base_Esc-Fund. ↗</a></span></footer>
-  <script src="app-v59.js?v=2026.08.12.3"></script>
+  <script src="app-v59.js?v=2026.08.12.4"></script>
   <script src="custom-more-info-v10.js?v=2026.07.17.11"></script>
   <script src="analytics-v1.js?v=2026.07.21.1"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -247,6 +247,6 @@
       }
     })();
   </script>
-  <!-- deploy-refresh: 2026.08.12.multi-filters-comparison -->
+  <!-- deploy-refresh: 2026.08.12.multi-filters-global -->
 </body>
 </html>
