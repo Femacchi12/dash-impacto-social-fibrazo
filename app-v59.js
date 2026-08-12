@@ -138,7 +138,7 @@ function renderGrowth(){
  const comparison=compareBy!=='none'?COMPARE_META[compareBy]:null;
  let groups=[];
  if(comparison){
-  const selected=selectedValues(filters[compareBy]),available=[...new Set(rs.map(comparison.value).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es')),values=selected.length?selected.filter(value=>available.includes(value)):available;
+  const rawSelected=selectedValues(filters[compareBy]),selected=compareBy==='size'?rawSelected.map(value=>({'0-200':'0–200','201-500':'201–500','501-1000':'501–1.000','1001+':'Más de 2.000'}[value]||value)):rawSelected,available=[...new Set(rs.map(comparison.value).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es')),values=selected.length?selected.filter(value=>available.includes(value)):available;
   groups=values.map(value=>({name:value,rows:rs.filter(row=>comparison.value(row)===value)}));
  }
  const seriesRows=[{name:'Total',rows:rs,total:true},...groups];
