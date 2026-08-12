@@ -11,17 +11,8 @@ const VERSION_URL="version.json";
 const VERSION_CHECK_MS=30*1000;
 let view='schools',period='year',chartType='bar',metricMode='schools',detailTab='summary',sortKey='',sortDirection='asc',locationsMap=null,locationsLayer=null,showAllRows=false,lastTableQuerySignature='';
 const visibleColumns={};
-let columnFilters={},activeColumnFilterMenu=null,compareBy='none';
+let columnFilters={},activeColumnFilterMenu=null;
 const multiWidgets=new Map();
-const COMPARE_META={
- city:{label:'Ciudad',value:d=>clean(d.city)},
- zone:{label:'Zona FIBRAZO',value:d=>clean(d.zone)},
- site:{label:'Tipo de sede',value:d=>clean(d.type)},
- status:{label:'Estado',value:d=>clean(d.status)},
- size:{label:'Tamaño',value:d=>sizeBucket(d)},
- internet:{label:'Internet previo',value:d=>clean(d.internet)},
- services:{label:'Servicios instalados',value:d=>clean(d.services)}
-};
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],fmt=n=>new Intl.NumberFormat('es-CO').format(n);
 const filters={city:$('#cityFilter'),zone:$('#zoneFilter'),site:$('#siteFilter'),status:$('#statusFilter'),size:$('#sizeFilter'),internet:$('#internetFilter'),services:$('#servicesFilter')};
@@ -131,45 +122,40 @@ function periodGroups(rs,mode='schools'){
  let cumulative=0;return items.map(item=>{const list=rs.filter(r=>{const d=parseDate(r.date);if(!d)return false;const key=period==='year'?String(d.getFullYear()):d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');return key===item.key});cumulative+=metricByMode(list,mode);return{...item,value:cumulative}})
 }
 function renderGrowth(){
- const rs=filtered(),foundation=view==='foundations',mode=foundation?'schools':metricMode==='both'&&compareBy!=='none'?'schools':metricMode;
+ const rs=filtered(),schoolAll=periodGroups(rs,'schools'),peopleAll=periodGroups(rs,'people');
+ let arr=schoolAll.map((item,i)=>({...item,schools:item.value,people:peopleAll[i]?.value||0}));
+ if(period==='month')arr=arr.filter((x,i)=>{const prev=i?schoolAll[i-1]:{value:0},prevPeople=i?peopleAll[i-1]:{value:0};return metricMode==='both'?x.schools!==prev.value||x.people!==prevPeople.value:metricMode==='people'?x.people!==prevPeople.value:x.schools!==prev.value});
+ if(arr.length&&period==='month'){
+  const latest=arr[arr.length-1];
+  const now=new Date();
+  const currentKey=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',timeZone:'America/Bogota'}).format(now);
+  const formattedDate=new Intl.DateTimeFormat('es-CO',{month:'short',year:'2-digit',timeZone:'America/Bogota'}).format(now).replace(/\./g,'');
+  const currentDate=formattedDate.charAt(0).toUpperCase()+formattedDate.slice(1);
+  if(latest.key===currentKey)arr[arr.length-1]={...latest,label:currentDate,isCurrent:true};
+  else arr=[...arr,{key:'current',label:currentDate,schools:latest.schools,people:latest.people,isCurrent:true}];
+ }
+ const foundation=view==='foundations',mode=foundation?'schools':metricMode;
  $('#growthTitle').textContent=foundation?'Crecimiento de fundaciones':mode==='people'?'Crecimiento de alumnos':mode==='both'?'Crecimiento de escuelas y alumnos':'Crecimiento de escuelas';
  const chart=$('#growthChart');chart.classList.toggle('monthly',period==='month');chart.classList.toggle('line-mode',chartType==='line');chart.classList.toggle('dual-mode',mode==='both');
- if(!rs.length){chart.innerHTML='<p class="empty">No hay cambios para estos filtros.</p>';return}
- const comparison=compareBy!=='none'?COMPARE_META[compareBy]:null;
- let groups=[];
- if(comparison){
-  const rawSelected=selectedValues(filters[compareBy]),selected=compareBy==='size'?rawSelected.map(value=>({'0-200':'0–200','201-500':'201–500','501-1000':'501–1.000','1001+':'Más de 2.000'}[value]||value)):rawSelected,available=[...new Set(rs.map(comparison.value).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es')),values=selected.length?selected.filter(value=>available.includes(value)):available;
-  groups=values.map(value=>({name:value,rows:rs.filter(row=>comparison.value(row)===value)}));
- }
- const seriesRows=[{name:'Total',rows:rs,total:true},...groups];
- const rawSeries=seriesRows.map(series=>({name:series.name,total:series.total,items:periodGroups(series.rows,mode)}));
- let labels=(rawSeries[0]?.items||[]).map(item=>({key:item.key,label:item.label}));
- if(period==='month'){
-  labels=labels.filter((item,index)=>rawSeries.some(series=>{const current=series.items[index]?.value||0,previous=index?series.items[index-1]?.value||0:0;return current!==previous}));
-  if(labels.length){
-   const now=new Date(),currentKey=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',timeZone:'America/Bogota'}).format(now),formatted=new Intl.DateTimeFormat('es-CO',{month:'short',year:'2-digit',timeZone:'America/Bogota'}).format(now).replace(/\./g,''),currentLabel=formatted.charAt(0).toUpperCase()+formatted.slice(1);
-   if(labels[labels.length-1].key===currentKey)labels[labels.length-1]={...labels[labels.length-1],label:currentLabel,isCurrent:true};
-   else labels.push({key:currentKey,label:currentLabel,isCurrent:true});
-  }
- }
- const valueAt=(series,key)=>{const item=series.items.find(entry=>entry.key===key);if(item)return item.value;const prior=series.items.filter(entry=>entry.key<key).pop();return prior?.value||0};
- const series=rawSeries.map(item=>({...item,values:labels.map(label=>valueAt(item,label.key))}));
- if(!labels.length){chart.innerHTML='<p class="empty">No hay cambios para estos filtros.</p>';return}
- const palette=['#00f29a','#f5d547','#73b9ff','#f38abf','#ff8d8d','#a78bfa','#fb923c','#22d3ee','#84cc16','#e879f9'];
- const width=Math.max(760,labels.length*(period==='month'?Math.max(128,series.length*34):Math.max(160,series.length*38))),height=340,pad={left:68,right:26,top:54,bottom:62},plotW=width-pad.left-pad.right,plotH=height-pad.top-pad.bottom;
- const maxValue=Math.max(1,...series.flatMap(item=>item.values)),x=i=>pad.left+plotW*(i+.5)/Math.max(1,labels.length),y=value=>pad.top+plotH-value/maxValue*plotH,ticks=[0,.25,.5,.75,1];
- const grid=ticks.map(t=>{const py=pad.top+plotH-t*plotH;return '<line class="growth-gridline" x1="'+pad.left+'" y1="'+py+'" x2="'+(width-pad.right)+'" y2="'+py+'"></line>'}).join('');
- const fixedAxis='<div class="growth-y-axis-fixed" aria-hidden="true"><svg viewBox="0 0 '+pad.left+' '+height+'" preserveAspectRatio="none">'+ticks.map(t=>{const py=pad.top+plotH-t*plotH;return '<text class="growth-y-label" x="'+(pad.left-10)+'" y="'+(py+4)+'" text-anchor="end">'+fmt(Math.round(maxValue*t))+'</text>'}).join('')+'<line class="growth-axis" x1="'+(pad.left-1)+'" y1="'+pad.top+'" x2="'+(pad.left-1)+'" y2="'+(pad.top+plotH)+'"></line></svg></div>';
- const xLabels=labels.map((item,i)=>'<text class="growth-x-label '+(item.isCurrent?'current':'')+'" transform="translate('+x(i)+','+(height-34)+') rotate('+(period==='month'?-32:0)+')" text-anchor="'+(period==='month'?'end':'middle')+'">'+esc(item.label)+'</text>').join('');
- const legend='<div class="growth-series-legend">'+series.map((item,index)=>'<span><i style="background:'+palette[index%palette.length]+'"></i>'+esc(item.name)+'</span>').join('')+'</div>';
- let marks='';
- if(chartType==='line'){
-  marks=series.map((item,seriesIndex)=>{const color=palette[seriesIndex%palette.length],points=item.values.map((value,i)=>x(i)+','+y(value)).join(' ');return '<polyline class="growth-line comparison-line" style="stroke:'+color+'" points="'+points+'"></polyline>'+item.values.map((value,i)=>'<circle class="growth-point comparison-point" style="stroke:'+color+'" cx="'+x(i)+'" cy="'+y(value)+'" r="'+(item.total?5:4)+'"></circle>').join('')}).join('');
+ if(!arr.length){chart.innerHTML='<p class="empty">No hay cambios para estos filtros.</p>';return}
+ const width=Math.max(760,arr.length*(period==='month'?128:160)),height=340,pad={left:68,right:mode==='both'?72:26,top:42,bottom:62},plotW=width-pad.left-pad.right,plotH=height-pad.top-pad.bottom;
+ const maxSchools=Math.max(1,...arr.map(x=>x.schools)),maxPeople=Math.max(1,...arr.map(x=>x.people)),singleMax=mode==='people'?maxPeople:maxSchools;
+ const x=i=>pad.left+plotW*(i+.5)/Math.max(1,arr.length),ys=v=>pad.top+plotH-v/maxSchools*plotH,yp=v=>pad.top+plotH-v/maxPeople*plotH,y=v=>pad.top+plotH-v/singleMax*plotH;
+  const ticks=[0,.25,.5,.75,1],leftScaleMax=mode==='both'?maxSchools:singleMax;
+  const grid=ticks.map(t=>{const py=pad.top+plotH-t*plotH;let out='<line class="growth-gridline" x1="'+pad.left+'" y1="'+py+'" x2="'+(width-pad.right)+'" y2="'+py+'"></line>';if(mode==='both')out+='<text class="growth-y-label people" x="'+(width-pad.right+10)+'" y="'+(py+4)+'" text-anchor="start">'+fmt(Math.round(maxPeople*t))+'</text>';return out}).join('');
+  const fixedAxis='<div class="growth-y-axis-fixed" aria-hidden="true"><svg viewBox="0 0 '+pad.left+' '+height+'" preserveAspectRatio="none">'+ticks.map(t=>{const py=pad.top+plotH-t*plotH;return '<text class="growth-y-label" x="'+(pad.left-10)+'" y="'+(py+4)+'" text-anchor="end">'+fmt(Math.round(leftScaleMax*t))+'</text>'}).join('')+'<line class="growth-axis" x1="'+(pad.left-1)+'" y1="'+pad.top+'" x2="'+(pad.left-1)+'" y2="'+(pad.top+plotH)+'"></line></svg></div>';
+ const labels=arr.map((d,i)=>'<text class="growth-x-label '+(d.isCurrent?'current':'')+'" transform="translate('+x(i)+','+(height-34)+') rotate('+(period==='month'?-32:0)+')" text-anchor="'+(period==='month'?'end':'middle')+'">'+esc(d.label)+'</text>').join('');
+ let marks='',legend='';
+ if(mode==='both'){
+  legend='<g class="growth-legend"><circle cx="'+pad.left+'" cy="18" r="5" class="growth-point"></circle><text x="'+(pad.left+10)+'" y="22">Escuelas</text><circle cx="'+(pad.left+86)+'" cy="18" r="5" class="growth-point people"></circle><text x="'+(pad.left+96)+'" y="22">Alumnos</text></g>';
+  if(chartType==='bar'){const bw=Math.min(30,Math.max(16,plotW/Math.max(1,arr.length)*.3));marks=arr.map((d,i)=>{const sy=ys(d.schools),py=yp(d.people);return '<rect class="growth-svg-bar" x="'+(x(i)-bw-2)+'" y="'+sy+'" width="'+bw+'" height="'+Math.max(2,pad.top+plotH-sy)+'" rx="5"></rect><rect class="growth-svg-bar people" x="'+(x(i)+2)+'" y="'+py+'" width="'+bw+'" height="'+Math.max(2,pad.top+plotH-py)+'" rx="5"></rect><text class="growth-value schools" x="'+(x(i)-6)+'" y="'+Math.max(34,sy-8)+'" text-anchor="end">'+fmt(d.schools)+'</text><text class="growth-value people" x="'+(x(i)+6)+'" y="'+Math.max(34,py-8)+'" text-anchor="start">'+fmt(d.people)+'</text>'}).join('')}
+  else{const sp=arr.map((d,i)=>x(i)+','+ys(d.schools)).join(' '),pp=arr.map((d,i)=>x(i)+','+yp(d.people)).join(' ');marks='<polyline class="growth-line" points="'+sp+'"></polyline><polyline class="growth-line people" points="'+pp+'"></polyline>'+arr.map((d,i)=>'<circle class="growth-point" cx="'+x(i)+'" cy="'+ys(d.schools)+'" r="5"></circle><circle class="growth-point people" cx="'+x(i)+'" cy="'+yp(d.people)+'" r="5"></circle>').join('')}
  }else{
-  const groupWidth=Math.min(74,Math.max(28,plotW/Math.max(1,labels.length)*.72)),barWidth=Math.max(5,Math.min(24,(groupWidth-4)/series.length));
-  marks=labels.map((label,i)=>series.map((item,seriesIndex)=>{const value=item.values[i],offset=(seriesIndex-(series.length-1)/2)*barWidth,py=y(value),color=palette[seriesIndex%palette.length];return '<rect class="growth-svg-bar comparison-bar" style="fill:'+color+'" x="'+(x(i)+offset-barWidth*.43)+'" y="'+py+'" width="'+(barWidth*.86)+'" height="'+Math.max(2,pad.top+plotH-py)+'" rx="4"></rect>'}).join('')).join('');
+  const value=d=>mode==='people'?d.people:d.schools;
+  if(chartType==='bar'){const bw=Math.min(46,Math.max(24,plotW/Math.max(1,arr.length)*.55));marks=arr.map((d,i)=>{const val=value(d),py=y(val);return '<rect class="growth-svg-bar" x="'+(x(i)-bw/2)+'" y="'+py+'" width="'+bw+'" height="'+Math.max(2,pad.top+plotH-py)+'" rx="7"></rect><text class="growth-value" x="'+x(i)+'" y="'+Math.max(26,py-8)+'" text-anchor="middle">'+fmt(val)+'</text>'}).join('')}
+  else{const pts=arr.map((d,i)=>x(i)+','+y(value(d))).join(' ');marks='<polyline class="growth-line" points="'+pts+'"></polyline>'+arr.map((d,i)=>'<circle class="growth-point" cx="'+x(i)+'" cy="'+y(value(d))+'" r="5"></circle><text class="growth-value" x="'+x(i)+'" y="'+Math.max(26,y(value(d))-10)+'" text-anchor="middle">'+fmt(value(d))+'</text>').join('')}
  }
- chart.innerHTML=legend+fixedAxis+'<div class="growth-svg-inner" style="width:'+width+'px"><svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+esc($('#growthTitle').textContent)+'">'+grid+'<line class="growth-axis" x1="'+pad.left+'" y1="'+pad.top+'" x2="'+pad.left+'" y2="'+(pad.top+plotH)+'"></line><line class="growth-axis" x1="'+pad.left+'" y1="'+(pad.top+plotH)+'" x2="'+(width-pad.right)+'" y2="'+(pad.top+plotH)+'"></line>'+marks+xLabels+'</svg></div>';
+ chart.innerHTML=fixedAxis+'<div class="growth-svg-inner" style="width:'+width+'px"><svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="'+esc($('#growthTitle').textContent)+'">'+legend+grid+'<line class="growth-axis" x1="'+pad.left+'" y1="'+pad.top+'" x2="'+pad.left+'" y2="'+(pad.top+plotH)+'"></line><line class="growth-axis" x1="'+pad.left+'" y1="'+(pad.top+plotH)+'" x2="'+(width-pad.right)+'" y2="'+(pad.top+plotH)+'"></line>'+marks+labels+'</svg></div>';
  if(period==='month')requestAnimationFrame(()=>{chart.scrollLeft=chart.scrollWidth});
 }
 function renderCities(){const rs=filtered(),map=new Map();rs.forEach(d=>{if(!map.has(d.city))map.set(d.city,[]);map.get(d.city).push(d)});const arr=[...map].map(([city,list])=>[city,metric(list)]).sort((a,b)=>b[1]-a[1]),max=Math.max(1,...arr.map(x=>x[1]));$('#cityChart').innerHTML=arr.length?arr.map(x=>'<div class="bar-row"><span>'+esc(x[0])+'</span><div class="track"><i style="width:'+x[1]/max*100+'%"></i></div><b>'+fmt(x[1])+'</b></div>').join(''):'<p class="empty">Sin resultados.</p>'}
@@ -326,7 +312,6 @@ $('#tableWrap').addEventListener('wheel',e=>{if(e.shiftKey){e.preventDefault();$
 $('#updatedAt').textContent=DATA_UPDATED_AT;
 $('#refreshDashboard').addEventListener('click',async()=>{if(await checkForAppUpdate())return;loadLiveData({manual:true})});
 enhanceAllFilters();
-$('#compareBy').addEventListener('change',event=>{compareBy=event.target.value;if(compareBy!=='none'&&metricMode==='both'){metricMode='schools';$('.metric-switch button').forEach(button=>button.classList.toggle('active',button.dataset.metric==='schools'))}renderGrowth()});
 syncOptions();resetDashboardFilters({status:'Instalado'});render();
 loadLiveData();
 setInterval(()=>{if(!document.hidden)loadLiveData()},AUTO_REFRESH_MS);
