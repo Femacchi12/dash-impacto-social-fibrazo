@@ -393,6 +393,102 @@ select option{
   color:#aab5b0!important;
 }
 
+/* ---------- Stronger surface separation ----------
+   Black remains the canvas. Panels use a defined charcoal surface,
+   cards/sub-blocks sit one level above it, and borders do the separating
+   without glows or decorative shadows. */
+:root{
+  --fz-surface:#101412;
+  --fz-surface-raised:#141a17;
+  --fz-surface-inner:#171d1a;
+  --fz-surface-hover:#1b211e;
+  --fz-control:#1d2320;
+  --fz-control-hover:#272e2a;
+  --fz-control-active:#222a26;
+  --fz-border:#414d47;
+  --fz-border-strong:#56635d;
+}
+
+/* Structural panels: clearly separated from the pure-black canvas */
+.hero-header,
+.panel,
+.filters,
+.chart-card,
+.connectivity,
+.school-size,
+.records,
+.more-info-view,
+.auth-card{
+  background:var(--fz-surface)!important;
+  border:1px solid var(--fz-border)!important;
+  box-shadow:none!important;
+}
+
+/* Raised cards: KPIs and contained informational blocks */
+.kpis > *,
+.more-kpis article,
+.more-hero-kpis article,
+.update-cards article,
+.quality,
+.size-summary > *,
+.map-summary,
+.locations-map-panel{
+  background:var(--fz-surface-raised)!important;
+  border-color:var(--fz-border-strong)!important;
+  box-shadow:none!important;
+}
+
+/* Inputs and controls are visibly interactive but remain neutral */
+select,
+input[type="search"],
+input[type="text"],
+.filter-grid select,
+.records-head input,
+button.outline,
+.table-actions button,
+#clearFilters,
+#columnsButton,
+#scrollLeft,
+#scrollRight,
+#showMoreRows,
+.auth-session button,
+.view-switch button,
+.mini-switch button,
+.detail-tabs button{
+  background:var(--fz-control)!important;
+  border-color:var(--fz-border-strong)!important;
+}
+
+/* Tables stay sober but use a slightly stronger header plane */
+.table-wrap,
+table,
+tbody,
+tr,
+td{
+  background:var(--fz-surface)!important;
+}
+
+thead,
+th{
+  background:var(--fz-surface-inner)!important;
+}
+
+th,
+td{
+  border-color:var(--fz-border)!important;
+}
+
+/* Inner visualization containers gain definition without competing with KPIs */
+.donut-wrap,
+.provider-list,
+.quality-grid,
+.size-chart,
+.size-summary,
+.growth-chart,
+.bar-chart{
+  border-color:var(--fz-border)!important;
+}
+
 @media (max-width:850px){
   .view-switch,
   .mini-switch,
