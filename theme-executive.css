@@ -1,0 +1,325 @@
+/* FIBRAZO · Executive dashboard theme
+   Shared visual logic with Dashboard de Competencia.
+   Purpose: sober, high-clarity UI with neutral controls and restrained brand accents. */
+
+:root{
+  --fz-page:#000000;
+  --fz-surface:#0b0f0d;
+  --fz-surface-hover:#111613;
+  --fz-control:#1a1d1c;
+  --fz-control-hover:#222625;
+  --fz-control-active:#202522;
+  --fz-border:#2f3733;
+  --fz-border-strong:#3b4540;
+  --fz-text:#f3f7f5;
+  --fz-muted:#a2ada7;
+  --fz-green:#00f29a;
+  --fz-green-border:rgba(0,242,154,.58);
+  --fz-green-soft:rgba(0,242,154,.08);
+  --fz-radius-panel:14px;
+  --fz-radius-control:8px;
+}
+
+html,
+body{
+  background:var(--fz-page)!important;
+  background-image:none!important;
+}
+
+body::before,
+body::after{
+  display:none!important;
+  background:none!important;
+}
+
+main{
+  background:transparent!important;
+}
+
+/* ---------- Main surfaces ---------- */
+.hero-header,
+.panel,
+.chart-card,
+.connectivity,
+.school-size,
+.records,
+.more-info-view,
+.update-cards article,
+.auth-card,
+.kpis > *{
+  background:var(--fz-surface)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  border-color:var(--fz-border)!important;
+}
+
+.hero-header,
+.panel,
+.auth-card,
+.kpis > *{
+  border-radius:var(--fz-radius-panel)!important;
+}
+
+/* Remove decorative circles / glows */
+.orbit{
+  display:none!important;
+}
+
+.kpis > *::before,
+.kpis > *::after{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+
+/* ---------- Unified control language ---------- */
+select,
+input[type="search"],
+input[type="text"],
+.filter-grid select,
+.records-head input,
+button.outline,
+.table-actions button,
+#clearFilters,
+#columnsButton,
+#scrollLeft,
+#scrollRight,
+#showMoreRows,
+.auth-session button,
+.view-switch button,
+.mini-switch button,
+.detail-tabs button{
+  background:var(--fz-control)!important;
+  background-image:none!important;
+  color:var(--fz-text)!important;
+  border:1px solid var(--fz-border-strong)!important;
+  border-radius:var(--fz-radius-control)!important;
+  box-shadow:none!important;
+}
+
+select:hover,
+input[type="search"]:hover,
+input[type="text"]:hover,
+button.outline:hover,
+.table-actions button:hover,
+#clearFilters:hover,
+#columnsButton:hover,
+#scrollLeft:hover,
+#scrollRight:hover,
+#showMoreRows:hover,
+.auth-session button:hover,
+.view-switch button:hover,
+.mini-switch button:hover,
+.detail-tabs button:hover{
+  background:var(--fz-control-hover)!important;
+  border-color:#4a5550!important;
+  color:#fff!important;
+}
+
+select:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+button:focus-visible{
+  outline:2px solid rgba(0,242,154,.30)!important;
+  outline-offset:2px!important;
+}
+
+/* Selected state: neutral fill + brand border/text, not action-green fill */
+.view-switch button.active,
+.mini-switch button.active,
+.detail-tabs button.active,
+.view-switch button[aria-selected="true"],
+.mini-switch button[aria-selected="true"],
+.detail-tabs button[aria-selected="true"]{
+  background:var(--fz-control-active)!important;
+  color:var(--fz-green)!important;
+  border-color:var(--fz-green-border)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,242,154,.06)!important;
+}
+
+/* Primary actions: the only controls with solid FIBRAZO green */
+.refresh-button,
+.auth-button:not(.secondary){
+  background:var(--fz-green)!important;
+  background-image:none!important;
+  color:#001a10!important;
+  border:1px solid var(--fz-green)!important;
+  border-radius:var(--fz-radius-control)!important;
+  box-shadow:none!important;
+  font-weight:800!important;
+}
+
+.refresh-button:hover,
+.auth-button:not(.secondary):hover{
+  filter:brightness(.94);
+}
+
+.auth-button.secondary{
+  background:var(--fz-control)!important;
+  color:var(--fz-text)!important;
+  border-color:var(--fz-border-strong)!important;
+  border-radius:var(--fz-radius-control)!important;
+}
+
+/* Secondary/utility actions stay neutral */
+button.outline,
+#clearFilters,
+#columnsButton,
+#scrollLeft,
+#scrollRight,
+#showMoreRows,
+.auth-session button{
+  color:#dfe6e2!important;
+}
+
+/* ---------- Header ---------- */
+.hero-header{
+  border-color:var(--fz-border)!important;
+}
+
+.update-cards article{
+  border-radius:12px!important;
+}
+
+.auth-session{
+  color:var(--fz-muted)!important;
+}
+
+.hero-copy p,
+.section-title p,
+.more-view-heading p{
+  color:var(--fz-muted)!important;
+}
+
+/* ---------- Filters ---------- */
+.filters{
+  border-color:var(--fz-border)!important;
+}
+
+.filter-grid label,
+.filter-label-detail{
+  color:var(--fz-muted)!important;
+}
+
+.filter-grid select{
+  min-height:42px!important;
+}
+
+/* ---------- Navigation / segmented controls ---------- */
+.view-switch,
+.mini-switch,
+.detail-tabs{
+  background:transparent!important;
+  background-image:none!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  gap:6px!important;
+}
+
+.view-switch button,
+.mini-switch button,
+.detail-tabs button{
+  min-height:36px;
+}
+
+/* ---------- KPI / chart cards ---------- */
+.kpis > *{
+  overflow:hidden!important;
+}
+
+.chart-card,
+.connectivity,
+.school-size,
+.records,
+.more-info-view{
+  border-color:var(--fz-border)!important;
+}
+
+/* Preserve semantic metric colors, but never as card backgrounds */
+.kpis > *[class*="green"],
+.kpis > *[class*="blue"],
+.kpis > *[class*="yellow"],
+.kpis > *[class*="warn"],
+.kpis > *[class*="info"],
+.kpis > *[class*="primary"]{
+  background:var(--fz-surface)!important;
+}
+
+/* ---------- Detail blocks ---------- */
+.size-summary > *,
+.quality-grid > *,
+.provider-list > *,
+.donut-wrap,
+.map-summary,
+.locations-map-panel{
+  background-color:var(--fz-surface)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  border-color:var(--fz-border)!important;
+}
+
+/* ---------- Tables ---------- */
+.table-wrap,
+table,
+thead,
+tbody,
+tr,
+th,
+td{
+  background-color:var(--fz-surface)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+
+th,
+td{
+  border-color:var(--fz-border)!important;
+}
+
+tbody tr:hover td{
+  background:var(--fz-surface-hover)!important;
+}
+
+.columns-menu{
+  background:var(--fz-control)!important;
+  background-image:none!important;
+  border-color:var(--fz-border-strong)!important;
+  border-radius:10px!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.34)!important;
+}
+
+/* ---------- Auth ---------- */
+.auth-gate{
+  background:var(--fz-page)!important;
+}
+
+.auth-card{
+  box-shadow:none!important;
+}
+
+/* ---------- Footer ---------- */
+footer{
+  background:transparent!important;
+  color:#718079!important;
+}
+
+/* No decorative gradients in structural UI */
+.hero-header,
+.filters,
+.chart-card,
+.connectivity,
+.school-size,
+.records,
+.more-info-view,
+.kpis > *{
+  background-image:none!important;
+}
+
+@media (max-width:850px){
+  .view-switch,
+  .mini-switch,
+  .detail-tabs{
+    gap:5px!important;
+  }
+}
