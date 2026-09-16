@@ -489,6 +489,53 @@ td{
   border-color:var(--fz-border)!important;
 }
 
+/* ---------- Strict filter text normalization ----------
+   Native selects can inherit a browser/system accent in some states.
+   Keep all functional filter copy white, consistent with the other FIBRAZO dashboards. */
+.filter-grid label,
+.filter-grid label > span,
+.filter-grid select,
+.filter-grid select:hover,
+.filter-grid select:focus,
+.filter-grid select:active,
+#cityFilter,
+#zoneFilter,
+#siteFilter,
+#statusFilter,
+#sizeFilter,
+#internetFilter,
+#servicesFilter{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  text-shadow:none!important;
+}
+
+.filter-grid select{
+  font-weight:600!important;
+  background-color:var(--fz-control)!important;
+  border-color:var(--fz-border-strong)!important;
+  caret-color:#ffffff!important;
+}
+
+.filter-grid select option,
+#cityFilter option,
+#zoneFilter option,
+#siteFilter option,
+#statusFilter option,
+#sizeFilter option,
+#internetFilter option,
+#servicesFilter option{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background-color:var(--fz-control)!important;
+}
+
+.filter-grid select:disabled{
+  color:#b6c0bb!important;
+  -webkit-text-fill-color:#b6c0bb!important;
+  opacity:.78!important;
+}
+
 @media (max-width:850px){
   .view-switch,
   .mini-switch,
