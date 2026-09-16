@@ -316,6 +316,83 @@ footer{
   background-image:none!important;
 }
 
+/* ---------- High-contrast executive typography ----------
+   White = labels, headings and functional copy.
+   Green = KPI values, selected states and primary actions.
+   Gray = supporting/context text only.
+   ------------------------------------------------------ */
+.hero-copy h1,
+.section-title h2,
+.more-view-heading h2,
+.connect-grid h3,
+.more-grids h3,
+.records-head h2{
+  color:#ffffff!important;
+  text-shadow:none!important;
+}
+
+.section-title > div > span,
+.more-view-heading span,
+.eyebrow,
+.filters .section-title span{
+  color:#ffffff!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+.filter-grid label{
+  color:#ffffff!important;
+  opacity:1!important;
+  font-weight:600!important;
+  text-shadow:none!important;
+}
+
+.filter-label-detail{
+  color:#d6ddda!important;
+  opacity:1!important;
+}
+
+.filter-grid select,
+.records-head input,
+select,
+input[type="search"],
+input[type="text"]{
+  color:#ffffff!important;
+}
+
+.filter-grid select option,
+select option{
+  color:#ffffff!important;
+  background:var(--fz-control)!important;
+}
+
+/* KPI card hierarchy: label white, value FIBRAZO green, context gray */
+.kpi span,
+.kpis > * span,
+.more-kpis span,
+.more-hero-kpis span{
+  color:#f5f7f6!important;
+  opacity:1!important;
+}
+
+.kpi strong,
+.kpis > * strong,
+.kpi.accent strong,
+.more-kpis strong,
+.more-hero-kpis strong,
+.quality b{
+  color:var(--fz-green)!important;
+  text-shadow:none!important;
+}
+
+.kpi small,
+.kpis > * small,
+.more-kpis small,
+.more-hero-kpis small,
+.quality small{
+  color:#aab5b0!important;
+}
+
 @media (max-width:850px){
   .view-switch,
   .mini-switch,
