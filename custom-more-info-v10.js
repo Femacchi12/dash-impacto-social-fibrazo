@@ -56,11 +56,11 @@ renderMainMoreInfo=function(){
  const cities=new Set(rs.map(d=>d.city).filter(Boolean)).size;
  const groupItems=(key)=>Object.entries(rs.reduce((acc,d)=>{const value=clean(d[key])||'Sin información';acc[value]=(acc[value]||0)+1;return acc},{})).sort((a,b)=>b[1]-a[1]);
 
- const palette=['#00ef9b','#ffd84d','#58a6ff','#c084fc','#ff8a65','#5eead4','#f472b6'];
+ const palette=['var(--brand-primary)','var(--brand-purple)','var(--brand-yellow)','var(--brand-pink)','var(--brand-orange)','var(--brand-gray)'];
  const donut=(items,centerLabel)=>{
    let cursor=0;
    const stops=items.map(([,count],i)=>{const start=cursor;cursor+=total?count/total*100:0;return palette[i%palette.length]+' '+start+'% '+cursor+'%'}).join(', ');
-   const background=total?'conic-gradient('+stops+')':'#13231d';
+   const background=total?'conic-gradient('+stops+')':'var(--fz-surface)';
    const legend=items.map(([label,count],i)=>'<p><i style="background:'+palette[i%palette.length]+'"></i><span>'+esc(label)+'</span><strong><span>'+fmt(count)+'</span><small>('+pct(count)+')</small></strong></p>').join('');
    return '<div class="more-pie-layout"><div class="more-pie" style="background:'+background+'"><div><strong>'+fmt(total)+'</strong><span>'+centerLabel+'</span></div></div><div class="more-pie-legend">'+legend+'</div></div>';
  };

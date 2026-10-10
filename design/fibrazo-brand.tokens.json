@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0",
+  "brand": "FIBRAZO",
+  "sourceOfTruth": {
+    "brandGuide": "https://drive.google.com/file/d/1HyHCByE0wOK5XONjUdiCrODUNKCT8vha/view",
+    "brandRegister": "https://docs.google.com/document/d/1vgYxAB-KhkhHMb-zd-eGJLk_UX6QcSjznZ2WnFRd9m8/edit",
+    "dashboardStandard": "https://docs.google.com/document/d/1prrIG6gikA7rfvadDz2xRF_PnnhtUtMZlJXOagflY_U/edit"
+  },
+  "colors": {
+    "primary": "#43FFA5",
+    "black": "#000000",
+    "gray": "#58595B",
+    "supplementary": {
+      "purple": "#E94CFF",
+      "yellow": "#FFB600",
+      "pink": "#FF005C",
+      "orange": "#FF5400"
+    }
+  },
+  "type": {
+    "interface": "Montserrat",
+    "tables": "Poppins"
+  },
+  "usage": {
+    "verified": ["primary", "black", "gray", "interface", "tables"],
+    "supplementary": "Use sparingly for chart series/categories when it improves reading and contrast.",
+    "notice": "Local versioned snapshot. It does not auto-sync with Google Drive; update through approved change control."
+  }
+}

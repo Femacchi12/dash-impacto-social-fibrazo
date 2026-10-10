@@ -1,0 +1,302 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap");
+
+/* FIBRAZO · Brand alignment v1.1 — Impacto Social — 2026-10-10
+   Official source of truth:
+   https://docs.google.com/document/d/1vgYxAB-KhkhHMb-zd-eGJLk_UX6QcSjznZ2WnFRd9m8/edit
+
+   Scope: visual identity only. Metrics, data sources, filters, auth, analytics,
+   map behavior and refresh automations remain unchanged.
+*/
+:root{
+  --brand-primary:#43FFA5;
+  --brand-black:#000000;
+  --brand-gray:#58595B;
+  --brand-purple:#E94CFF;
+  --brand-yellow:#FFB600;
+  --brand-pink:#FF005C;
+  --brand-orange:#FF5400;
+
+  --brand-font-ui:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --brand-font-table:"Poppins","Montserrat",system-ui,sans-serif;
+
+  /* Digital neutrals derived for accessibility on the official black base. */
+  --brand-surface:#0d0e0e;
+  --brand-surface-raised:#151616;
+  --brand-control:#1d1e1f;
+  --brand-control-hover:#252627;
+  --brand-border:rgba(88,89,91,.72);
+  --brand-border-soft:rgba(88,89,91,.46);
+  --brand-text:#ffffff;
+  --brand-muted:#b9bcba;
+
+  /* Shared dashboard tokens. */
+  --fz-page:var(--brand-black);
+  --fz-surface:var(--brand-surface);
+  --fz-surface-hover:var(--brand-surface-raised);
+  --fz-control:var(--brand-control);
+  --fz-control-hover:var(--brand-control-hover);
+  --fz-control-active:var(--brand-surface-raised);
+  --fz-border:var(--brand-border-soft);
+  --fz-border-strong:var(--brand-border);
+  --fz-text:var(--brand-text);
+  --fz-muted:var(--brand-muted);
+  --fz-green:var(--brand-primary);
+  --fz-green-border:rgba(67,255,165,.58);
+  --fz-green-soft:rgba(67,255,165,.08);
+
+  /* Legacy aliases retained so existing components inherit the new identity. */
+  --bg:var(--brand-black);
+  --panel:var(--brand-surface);
+  --panel2:var(--brand-surface-raised);
+  --line:var(--brand-border-soft);
+  --green:var(--brand-primary);
+  --green2:var(--brand-primary);
+  --yellow:var(--brand-yellow);
+  --blue:var(--brand-purple);
+  --pink:var(--brand-pink);
+  --text:var(--brand-text);
+  --muted:var(--brand-muted);
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea{
+  font-family:var(--brand-font-ui)!important;
+}
+
+body{
+  background:var(--brand-black)!important;
+  color:var(--brand-text)!important;
+}
+
+table,
+table button,
+th,
+td,
+.table-wrap,
+.columns-menu{
+  font-family:var(--brand-font-table)!important;
+}
+
+/* Authentication and header */
+.auth-gate,
+.auth-card,
+.auth-session,
+.auth-session button{
+  font-family:var(--brand-font-ui)!important;
+}
+.auth-gate{background:var(--brand-black)!important}
+.auth-card{
+  background:var(--brand-surface)!important;
+  border-color:var(--brand-border)!important;
+}
+.auth-brand,
+.hero-brand span,
+.section-title span,
+.more-view-heading span{
+  color:var(--brand-primary)!important;
+}
+.auth-button,
+.refresh-button,
+.client-link{
+  background:var(--brand-primary)!important;
+  border-color:var(--brand-primary)!important;
+  color:var(--brand-black)!important;
+}
+.auth-button.secondary{
+  background:transparent!important;
+  color:var(--brand-primary)!important;
+}
+.auth-session button{
+  border-color:rgba(67,255,165,.58)!important;
+  background:rgba(67,255,165,.08)!important;
+  color:var(--brand-primary)!important;
+}
+
+/* Main surfaces and cards */
+.hero-header,
+.panel,
+.chart-card,
+.connectivity,
+.school-size,
+.records,
+.more-info-view,
+.update-cards article,
+.kpis > *,
+.more-kpis article,
+.more-grids section,
+.more-hero-kpis article{
+  background-color:var(--brand-surface)!important;
+  border-color:var(--brand-border-soft)!important;
+}
+
+.kpi.primary,
+.more-hero-kpis .featured{
+  border-color:rgba(67,255,165,.52)!important;
+}
+
+.kpi strong,
+.kpi small,
+.more-kpis strong,
+.more-hero-kpis strong,
+.size-summary b,
+.quality b,
+.table-tools p b,
+.map-summary b{
+  color:var(--brand-primary)!important;
+}
+
+.kpi.accent strong,
+.bool.no,
+.growth-value.people,
+.growth-y-label.people{
+  color:var(--brand-yellow)!important;
+}
+
+/* Controls, navigation and focus */
+select,
+input[type="search"],
+input[type="text"],
+.filter-grid select,
+.multi-filter-button,
+.multi-filter-menu>input,
+.records-head input,
+button.outline,
+.table-actions button,
+#clearFilters,
+#columnsButton,
+#scrollLeft,
+#scrollRight,
+#showMoreRows,
+.view-switch button,
+.mini-switch button,
+.detail-tabs button{
+  background:var(--brand-control)!important;
+  border-color:var(--brand-border)!important;
+  color:var(--brand-text)!important;
+}
+
+select:hover,
+input[type="search"]:hover,
+input[type="text"]:hover,
+.multi-filter-button:hover,
+button.outline:hover,
+.table-actions button:hover,
+#clearFilters:hover,
+#columnsButton:hover,
+#scrollLeft:hover,
+#scrollRight:hover,
+#showMoreRows:hover,
+.view-switch button:hover,
+.mini-switch button:hover,
+.detail-tabs button:hover{
+  background:var(--brand-control-hover)!important;
+}
+
+.view-switch button.active,
+.mini-switch button.active,
+.detail-tabs button.active,
+.view-switch button[aria-selected="true"],
+.mini-switch button[aria-selected="true"],
+.detail-tabs button[aria-selected="true"]{
+  background:var(--brand-surface-raised)!important;
+  color:var(--brand-primary)!important;
+  border-color:rgba(67,255,165,.58)!important;
+  box-shadow:inset 0 0 0 1px rgba(67,255,165,.06)!important;
+}
+
+:focus-visible,
+select:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+.multi-filter-button[aria-expanded="true"]{
+  outline:2px solid rgba(67,255,165,.36)!important;
+  outline-offset:2px!important;
+  border-color:var(--brand-primary)!important;
+}
+
+/* Charts and data visualization */
+.track{background:rgba(88,89,91,.34)!important}
+.track i,
+.more-bar i b{
+  background:var(--brand-primary)!important;
+}
+.growth-svg-bar.people,
+.city-dual-series>div:nth-child(2) .track i{
+  fill:var(--brand-yellow)!important;
+  background:var(--brand-yellow)!important;
+}
+.growth-line.people{stroke:var(--brand-yellow)!important;filter:none!important}
+.growth-point.people{stroke:var(--brand-yellow)!important}
+.city-dual-legend span:nth-child(2) i,
+.more-pie-legend i.foundation,
+.presence-marker.foundation{
+  background:var(--brand-yellow)!important;
+}
+.presence-marker.foundation{
+  border-color:var(--brand-yellow)!important;
+  box-shadow:0 0 0 4px rgba(255,182,0,.16),0 0 18px rgba(255,182,0,.38)!important;
+}
+
+/* Detailed table */
+.records th,
+.records .sort-button,
+.sort-button:hover,
+.sort-button.sorted,
+.sort-button.sorted i{
+  color:var(--brand-primary)!important;
+}
+.records th{
+  background:var(--brand-surface-raised)!important;
+}
+.records td{
+  border-top-color:var(--brand-border-soft)!important;
+}
+.map-link{
+  border-color:rgba(67,255,165,.58)!important;
+  color:var(--brand-primary)!important;
+}
+.columns-menu{
+  background:var(--brand-surface-raised)!important;
+  border-color:var(--brand-border)!important;
+}
+.columns-menu input,
+.multi-filter-options input{
+  accent-color:var(--brand-primary)!important;
+}
+
+/* Scrollbars */
+.table-wrap,
+.growth-chart,
+.multi-filter-options{
+  scrollbar-color:var(--brand-primary) var(--brand-surface-raised)!important;
+}
+.growth-chart::-webkit-scrollbar-thumb{
+  background:var(--brand-primary)!important;
+  border-color:var(--brand-surface-raised)!important;
+}
+.growth-chart::-webkit-scrollbar-track{
+  background:var(--brand-surface-raised)!important;
+}
+
+/* Statuses keep their business meaning; brand is applied to the common shell only. */
+.status-tag,
+.type-tag,
+.bool{
+  font-family:var(--brand-font-table)!important;
+}
+
+/* Mobile: preserve existing breakpoints while keeping touch controls readable. */
+@media(max-width:600px){
+  button,
+  select,
+  input[type="search"],
+  .multi-filter-button{
+    min-height:40px;
+  }
+  .hero-copy h1{line-height:1.35}
+  .records table{font-size:11px}
+}
