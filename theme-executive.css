@@ -303,7 +303,7 @@ tbody tr:hover td{
 /* ---------- Footer ---------- */
 footer{
   background:transparent!important;
-  color:#718079!important;
+  color:var(--brand-muted)!important;
 }
 
 /* No decorative gradients in structural UI */
@@ -400,15 +400,15 @@ select option{
    cards/sub-blocks sit one level above it, and borders do the separating
    without glows or decorative shadows. */
 :root{
-  --fz-surface:#101412;
-  --fz-surface-raised:#141a17;
-  --fz-surface-inner:#171d1a;
-  --fz-surface-hover:#1b211e;
-  --fz-control:#1d2320;
-  --fz-control-hover:#272e2a;
-  --fz-control-active:#222a26;
-  --fz-border:#414d47;
-  --fz-border-strong:#56635d;
+  --fz-surface:var(--brand-surface);
+  --fz-surface-raised:var(--brand-surface-raised);
+  --fz-surface-inner:var(--brand-surface-inner);
+  --fz-surface-hover:var(--brand-control-hover);
+  --fz-control:var(--brand-control);
+  --fz-control-hover:var(--brand-control-hover);
+  --fz-control-active:var(--brand-control-active);
+  --fz-border:var(--brand-border-soft);
+  --fz-border-strong:var(--brand-border);
 }
 
 /* Structural panels: clearly separated from the pure-black canvas */
