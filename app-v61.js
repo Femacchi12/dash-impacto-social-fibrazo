@@ -158,7 +158,8 @@ function renderGrowth(){
  if(!labels.length){chart.innerHTML='<p class="empty">No hay cambios para estos filtros.</p>';return}
  const valueAt=(item,key)=>{const exact=item.items.find(entry=>entry.key===key);if(exact)return exact.value;const prior=item.items.filter(entry=>entry.key<key).pop();return prior?.value||0};
  series.forEach(item=>item.values=labels.map(label=>valueAt(item,label.key)));
- const brandSeries=['var(--brand-primary)','var(--brand-purple)','var(--brand-yellow)','var(--brand-pink)','var(--brand-orange)','var(--brand-gray)'];\n const colorFor=index=>index===0&&groups[0]?.total?'var(--fz-text)':brandSeries[Math.max(0,index-(groups[0]?.total?1:0))%brandSeries.length];
+ const brandSeries=['var(--brand-primary)','var(--brand-purple)','var(--brand-yellow)','var(--brand-pink)','var(--brand-orange)','var(--brand-gray)'];
+ const colorFor=index=>index===0&&groups[0]?.total?'var(--fz-text)':brandSeries[Math.max(0,index-(groups[0]?.total?1:0))%brandSeries.length];
  const width=Math.max(760,labels.length*(period==='month'?Math.max(128,groups.length*34):Math.max(160,groups.length*38))),height=340,pad={left:68,right:mode==='both'?72:26,top:54,bottom:62},plotW=width-pad.left-pad.right,plotH=height-pad.top-pad.bottom;
  const schoolSeries=series.filter(item=>item.metricKey==='schools'),peopleSeries=series.filter(item=>item.metricKey==='people');
  const maxSchools=Math.max(1,...schoolSeries.flatMap(item=>item.values)),maxPeople=Math.max(1,...peopleSeries.flatMap(item=>item.values)),singleMax=mode==='people'?maxPeople:maxSchools;
