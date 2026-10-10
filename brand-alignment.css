@@ -22,8 +22,10 @@
   /* Digital neutrals derived for accessibility on the official black base. */
   --brand-surface:#0d0e0e;
   --brand-surface-raised:#151616;
+  --brand-surface-inner:#191a1a;
   --brand-control:#1d1e1f;
   --brand-control-hover:#252627;
+  --brand-control-active:#232425;
   --brand-border:rgba(88,89,91,.72);
   --brand-border-soft:rgba(88,89,91,.46);
   --brand-text:#ffffff;
@@ -35,7 +37,7 @@
   --fz-surface-hover:var(--brand-surface-raised);
   --fz-control:var(--brand-control);
   --fz-control-hover:var(--brand-control-hover);
-  --fz-control-active:var(--brand-surface-raised);
+  --fz-control-active:var(--brand-control-active);
   --fz-border:var(--brand-border-soft);
   --fz-border-strong:var(--brand-border);
   --fz-text:var(--brand-text);
