@@ -1426,3 +1426,16 @@ footer .source-link:focus-visible{
 .growth-tooltip{position:fixed;z-index:9999;display:grid;gap:5px;width:max-content;max-width:min(360px,calc(100vw - 16px));padding:11px 13px;border:1px solid #00f29a88;border-radius:11px;background:#07110ef5;box-shadow:0 12px 36px #000b;color:#f4fff9;font:11px Inter,sans-serif;line-height:1.35;pointer-events:none}
 .growth-tooltip[hidden]{display:none}.growth-tooltip b{color:#00f29a;font-size:12px}.growth-tooltip span{color:#a9beb5;white-space:normal}.growth-tooltip strong{font-size:12px}
 @media(max-width:760px){.growth-line-hit{stroke-width:28}.growth-tooltip{max-width:calc(100vw - 20px);font-size:12px}}
+
+/* FIBRAZO 2026 · Official brand and solid high-contrast surfaces. Preview branch only. */
+:root{--bg:#050807;--panel:#0b110f;--panel2:#0f1714;--line:#294137;--green:#43ffa5;--green2:#20d58d;--text:#fff;--muted:#c7d6ce}
+body{font-family:Montserrat,Inter,system-ui,sans-serif!important;color:#fff}
+h1,h2,h3,h4,button,input,select,textarea,.kpi-value,.card-title{font-family:Montserrat,Inter,system-ui,sans-serif}
+input,select,textarea{background:#111e18!important;color:#fff!important;border-color:#385448!important}
+input::placeholder,textarea::placeholder{color:#d2dfd7!important;opacity:.78}
+button{color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #43ffa5;outline-offset:2px}
+.card,.panel,.modal,.modal-content,.popover,.dropdown-menu,.filter-panel,.kpi-card,.tooltip,.growth-tooltip{color:#fff;background-color:#101b15}
+.growth-tooltip{background:#101b15!important;border-color:#43ffa5!important}
+.growth-tooltip b{color:#43ffa5!important}.growth-tooltip span{color:#fff!important}
+.table,table{font-family:Poppins,Montserrat,Inter,sans-serif;color:#fff}
