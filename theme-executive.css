@@ -545,3 +545,12 @@ td{
     gap:5px!important;
   }
 }
+
+/* FO-VIS-20261015 · Brand-compliant executive surface refinement (preview only). */
+:root{--fz-page:#050807;--fz-surface:#0b110f;--fz-surface-hover:#101b15;--fz-surface-inner:#14231b;--fz-control:#172820;--fz-control-hover:#244133;--fz-control-active:#24513b;--fz-border:#294137;--fz-border-strong:#426454;--fz-text:#fff;--fz-muted:#d0ddd5;--fz-green:#43ffa5;--brand-primary:#43ffa5;--brand-text:#fff}
+body,.hero-header,.panel,.chart-card,.connectivity,.school-size,.records,.more-info-view,.update-cards article,.auth-card,.kpis>*{font-family:Montserrat,Inter,system-ui,sans-serif!important;color:#fff!important}
+.panel,.chart-card,.kpis>*,.auth-card,.more-info-view{background:#0b110f!important}
+.filter-grid select,.filter-grid input,.filter-grid button,.filter-grid textarea{background:#172820!important;color:#fff!important}
+input::placeholder,textarea::placeholder{color:#d0ddd5!important}
+th,td,.table-wrap table{font-family:Poppins,Montserrat,sans-serif!important}
+.growth-tooltip{background:#101b15!important;color:#fff!important}
