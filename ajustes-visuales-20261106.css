@@ -34,3 +34,6 @@ html body :is(.product-nav,.fz-social-nav){box-sizing:border-box!important;min-w
 html body :is(.product-nav,.fz-social-nav)>:is(button,a){flex:0 0 auto!important;white-space:nowrap!important}
 @media(min-width:900px){html body main> :is(.product-nav,.fz-social-nav){position:absolute!important;z-index:1100!important;left:240px!important;right:100px!important;top:10px!important;width:auto!important;margin:0!important}}
 @media(max-width:899px){html body main> :is(.product-nav,.fz-social-nav){position:relative!important;left:auto!important;right:auto!important;top:auto!important;width:100%!important;margin:0 0 12px!important}}
+
+/* Igualar a Competencia: solo botones, sin recuadro de fondo. */
+html body:not(#fz-nav-a):not(#fz-nav-b) .fz-social-nav{background:transparent!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}

@@ -11,3 +11,7 @@ Se igualan la tipografía, tamaño de marca y título del encabezado con Forms. 
 ## Barra de navegación junto a la marca
 
 Por solicitud de Edu, la navegación de secciones se sitúa junto a la marca en pantallas amplias, con barra y perfil en la misma línea siguiendo Forms. En pantallas estrechas permanece debajo del encabezado y permite desplazamiento horizontal. Pendiente revisión visual de Edu.
+
+## Navegación sin recuadro — 6 de noviembre de 2026
+
+Por solicitud de Edu, la barra superior conserva los botones individuales y elimina el recuadro de fondo; en Forms se igualan las dimensiones y forma de los botones a Competencia. Se mantiene la posición superior y el estado seleccionado verde. Pendiente revisión visual del usuario.
