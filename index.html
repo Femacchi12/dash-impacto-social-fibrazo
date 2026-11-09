@@ -39,6 +39,7 @@
   <link rel="stylesheet" href="visual-transversal-20261106.css?v=VIS021-20261106" />
   <link rel="stylesheet" href="shared-header-selection.css?v=20261106-1" />
   <link rel="stylesheet" href="ajustes-visuales-20261106.css?v=9">
+  <link rel="stylesheet" href="https://fibrazo-forms.vercel.app/dashboard-permissions.css?v=20261109">
 </head>
 <body class="auth-pending">
   <section id="authGate" class="auth-gate" aria-live="polite">
@@ -148,6 +149,8 @@
   <script src="analytics-v1.js?v=2026.07.21.1"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://fibrazo-forms.vercel.app/dashboard-permissions-ui.js?v=20261109"></script>
+  <script src="https://fibrazo-forms.vercel.app/dashboard-permissions-mount.js?v=20261109"></script>
   <script>
     (() => {
       const firebaseConfig = {
@@ -169,9 +172,12 @@
       const signOutButton = document.getElementById("signOutButton");
       const signedInEmail = document.getElementById("signedInEmail");
 
-      const isAllowed = user => {
-        const email = (user && user.email || "").trim().toLowerCase();
-        return user && user.emailVerified && (email === allowedException || email.endsWith(allowedDomain));
+      const isAllowed = async user => {
+        if(!user?.emailVerified)return false;
+        const token=await user.getIdToken();
+        const r=await fetch("https://fibrazo-forms.vercel.app/api/dashboard-permissions?dashboard=impacto_social",{headers:{Authorization:"Bearer "+token},cache:"no-store"});
+        if(!r.ok)throw new Error("POLICY_UNAVAILABLE");
+        return !!(await r.json()).allowed;
       };
       const showDashboard = user => {
         signedInEmail.textContent = (user && user.email) || "";
@@ -197,13 +203,17 @@
 
         auth.onAuthStateChanged(async user => {
           if (!user) {
+            window.dispatchEvent(new Event("fibrazo-dashboard-signout"));
             showGate("Inicia sesión con tu cuenta de Google para continuar.");
             signIn.hidden = false;
             changeAccount.hidden = true;
             return;
           }
-          if (isAllowed(user)) {
+          let allowed;
+          try {allowed=await isAllowed(user);} catch (_) {showGate("No fue posible verificar los permisos. Intenta nuevamente.");return;}
+          if (allowed) {
             showDashboard(user);
+            window.dispatchEvent(new CustomEvent("fibrazo-dashboard-auth",{detail:{user,dashboard:"impacto_social"}}));
             return;
           }
           showGate("La cuenta " + (user.email || "") + " no tiene acceso a este dashboard.", true);
