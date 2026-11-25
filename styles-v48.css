@@ -1426,3 +1426,28 @@ footer .source-link:focus-visible{
 .growth-tooltip{position:fixed;z-index:9999;display:grid;gap:5px;width:max-content;max-width:min(360px,calc(100vw - 16px));padding:11px 13px;border:1px solid #00f29a88;border-radius:11px;background:#07110ef5;box-shadow:0 12px 36px #000b;color:#f4fff9;font:11px Inter,sans-serif;line-height:1.35;pointer-events:none}
 .growth-tooltip[hidden]{display:none}.growth-tooltip b{color:#00f29a;font-size:12px}.growth-tooltip span{color:#a9beb5;white-space:normal}.growth-tooltip strong{font-size:12px}
 @media(max-width:760px){.growth-line-hit{stroke-width:28}.growth-tooltip{max-width:calc(100vw - 20px);font-size:12px}}
+/* SO-CHG-013 · Socializadores FIBRAZO: guía institucional móvil */
+.socializers-view{display:grid;gap:18px;margin:16px 0 22px}
+.socializers-intro{position:relative;overflow:hidden;padding:clamp(22px,4vw,45px);background:radial-gradient(circle at 100% 0,rgba(0,242,154,.16),transparent 45%),#090f0c}
+.socializers-intro::after{content:"";position:absolute;width:215px;height:215px;right:-115px;bottom:-125px;border:2px solid rgba(0,242,154,.18);border-radius:50%;pointer-events:none}
+.socializers-eyebrow{color:var(--green);font-size:11px;letter-spacing:.17em;font-weight:800}
+.socializers-intro h2{font-size:clamp(27px,5vw,46px);letter-spacing:-.05em;margin:15px 0}
+.socializers-intro h2 span{color:var(--green)}
+.socializers-intro p{line-height:1.7;max-width:850px;color:#b9cfc3;font-size:clamp(14px,2.1vw,17px)}
+.socializers-intro .socializers-lead{font-weight:600;color:#f0fff6;font-size:clamp(16px,2.3vw,20px)}
+.socializers-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.socializers-card{padding:28px;background:#0c1410;display:flex;flex-direction:column;align-items:flex-start}
+.socializers-card-icon,.socializers-guide-icon{width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(0,242,154,.32);border-radius:14px;background:#11271b;font-size:24px;margin-bottom:18px}
+.socializers-card h3,.socializers-tutorial h3{font-size:clamp(20px,3vw,27px);margin:10px 0}
+.socializers-card p,.socializers-tutorial p{line-height:1.65;color:#b9cbc1;font-size:14px}
+.socializers-card p{flex:1}
+.socializers-action{border:1px solid var(--green);background:var(--green);color:#061d11;text-decoration:none;font:800 14px Inter,system-ui,sans-serif;border-radius:12px;padding:13px 19px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:12px;margin-top:15px}
+.socializers-action:hover{filter:brightness(.92)}
+.socializers-tutorial{padding:clamp(20px,4vw,38px)}
+.socializers-guidance{padding:14px 18px;background:rgba(0,242,154,.06);border-left:3px solid var(--green);border-radius:8px}
+.socializers-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0}
+.socializers-guide-grid article{background:#111a15;border:1px solid #294035;border-radius:14px;padding:23px}
+.socializers-guide-grid h4{font-size:17px;color:#f5fff9;margin:4px 0}
+.socializers-guide-grid .socializers-guide-icon{width:43px;height:43px;font-size:20px}
+.socializers-tutorial .socializers-note{font-size:12px;color:#b6c4bc;border-top:1px solid #254133;padding-top:16px}
+@media(max-width:760px){.socializers-choices,.socializers-guide-grid{grid-template-columns:1fr}.fz-social-nav{width:100%;overflow-x:auto}.fz-social-nav button{white-space:nowrap}.socializers-card{padding:21px}.socializers-guide-grid article{padding:17px}}
