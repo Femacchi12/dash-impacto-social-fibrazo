@@ -67,7 +67,7 @@
       </div>
       <div class="orbit" aria-hidden="true"></div>
     </header>
-    <div class="view-switch fz-social-nav" role="tablist" aria-label="Secciones de Impacto Social"><button class="active" data-view="schools">Escuelas</button><button data-view="foundations">Fundaciones</button><button data-view="more">Más info</button></div>
+    <div class="view-switch fz-social-nav" role="tablist" aria-label="Secciones de Impacto Social"><button class="active" data-view="schools">Escuelas</button><button data-view="foundations">Fundaciones</button><button data-view="more">Más info</button><button data-view="socializers">Socializadores</button></div>
     <section class="filters panel">
       <div class="section-title filters-heading">
         <div><span>FILTROS</span><h2>Explora el impacto</h2></div>
@@ -87,6 +87,43 @@
       </div>
     </section>
 
+
+    <section id="socializersView" class="socializers-view" hidden>
+      <div class="socializers-intro panel">
+        <div class="socializers-eyebrow">CONEXIÓN DIGITAL PARA LA EDUCACIÓN</div>
+        <h2>SOCIALIZADORES <span>FIBRAZO</span></h2>
+        <p class="socializers-lead">Tu trabajo es la primera conexión entre FIBRAZO y cada comunidad. Al escuchar, orientar y acompañar a las instituciones educativas, ayudas a abrir nuevas oportunidades digitales para docentes y estudiantes.</p>
+        <p>¡Gracias por ser parte de esta misión! Cada institución que acompañamos nos acerca a una educación más conectada.</p>
+      </div>
+      <div class="socializers-choices">
+        <article class="socializers-card panel">
+          <div class="socializers-card-icon" aria-hidden="true">📋</div>
+          <div class="socializers-eyebrow">TRABAJO EN CAMPO</div>
+          <h3>Encuesta de Impacto Social</h3>
+          <p>Registra nuevas instituciones educativas públicas, reporta novedades y actualiza información institucional desde FIBRAZO Forms.</p>
+          <a class="socializers-action" href="https://fibrazo-forms.vercel.app/" target="_blank" rel="noopener noreferrer">Abrir formulario <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="socializers-card panel">
+          <div class="socializers-card-icon" aria-hidden="true">📖</div>
+          <div class="socializers-eyebrow">GUÍA PRÁCTICA</div>
+          <h3>Cómo ayudar a las escuelas</h3>
+          <p>Pasos sencillos para orientar a los responsables sobre consultas, novedades y cambio de contraseña desde el chat y el portal.</p>
+          <button id="socializersTutorialButton" class="socializers-action" type="button" aria-expanded="false" aria-controls="socializersTutorial">Ver tutorial <span aria-hidden="true">↓</span></button>
+        </article>
+      </div>
+      <div id="socializersTutorial" class="socializers-tutorial panel" hidden>
+        <div class="socializers-eyebrow">TUTORIAL · PORTAL MI FIBRAZO Y CHAT</div>
+        <h3>Guía para orientar a una institución educativa</h3>
+        <p class="socializers-guidance">Solicita a la persona responsable que identifique correctamente la institución y su sede. Nunca pidas ni compartas contraseñas o códigos de acceso.</p>
+        <div class="socializers-guide-grid">
+          <article><div class="socializers-guide-icon">💬</div><h4>1. Consultas por el chat</h4><p>Ingresa al canal oficial de atención FIBRAZO. Identifica la institución y describe la consulta con claridad. Si necesita gestionar su cuenta, el chat puede dirigirla a Portal Mi Fibrazo.</p></article>
+          <article><div class="socializers-guide-icon">🛠️</div><h4>2. Reportar una novedad</h4><p>Indica la institución y sede afectada, describe si se trata de falta de internet, intermitencia, lentitud, ONU o placa «Mi Escuela Conectada» y adjunta evidencias cuando corresponda. Deja un contacto actualizado para el seguimiento.</p><p>El socializador también puede registrar la novedad desde el formulario Impacto Social cuando esta opción esté habilitada.</p></article>
+          <article><div class="socializers-guide-icon">🔑</div><h4>3. Cambiar la contraseña</h4><p>Inicia la consulta desde el chat o ingresa directamente al Portal Mi Fibrazo. Si comienza en el chat, será redirigido al portal: <strong>el cambio de contraseña se realiza dentro del portal, después de iniciar sesión</strong>.</p><p>Usa el enlace de acceso enviado al contacto autorizado de la institución. No compartas ese enlace con terceros.</p></article>
+          <article><div class="socializers-guide-icon">✅</div><h4>4. Dar seguimiento</h4><p>Conserva el número de caso o confirmación, si el canal lo proporciona. Comunica al responsable el estado informado por atención y evita prometer tiempos de resolución que no hayan sido confirmados.</p></article>
+        </div>
+        <p class="socializers-note">Esta guía es orientativa: la disponibilidad de opciones puede variar según la cuenta y la sede. Antes de informar plazos, confirma el procedimiento vigente con el equipo de soporte.</p>
+      </div>
+    </section>
 
     <section id="moreInfoView" class="panel more-info-view" hidden>
       <div class="more-view-heading"><div><span>VISIÓN GENERAL</span><h2>Más información del impacto social</h2></div></div>
