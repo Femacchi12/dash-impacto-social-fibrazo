@@ -239,10 +239,13 @@ function renderLocationsMap(rs){
  $('#locationsMap').innerHTML='<iframe class="my-maps-frame" title="Mapa de instituciones educativas y fundaciones" src="https://www.google.com/maps/d/embed?mid=1IP8S422GKdDmvrAtU0ZPTR7ql9P3CUs&ehbc=2E312F" loading="lazy" allowfullscreen></iframe>';
 }
 function renderMainMoreInfo(){
- const isMore=view==='more',panel=$('#moreInfoView');
+ const isMore=view==='more',isSocializers=view==='socializers',panel=$('#moreInfoView');
+ const socializerPanel=$('#socializersView');if(socializerPanel)socializerPanel.hidden=!isSocializers;
  panel.hidden=!isMore;
  const dashboardSections=['#kpis','.charts','.connectivity','.school-size','.records'];
- dashboardSections.forEach(selector=>{const el=$(selector);if(el)el.hidden=isMore});
+ dashboardSections.forEach(selector=>{const el=$(selector);if(el)el.hidden=isMore||isSocializers});
+ const filterPanel=$('.filters');if(filterPanel)filterPanel.hidden=isSocializers;
+ if(isSocializers)return true;
  if(!isMore)return false;
  const rs=filtered();
  const uniqueOrgs=new Set(rs.map(d=>(d.org+'|'+clean(d.institution)).toLowerCase())).size;
@@ -342,6 +345,14 @@ $('#scrollRight').addEventListener('click',()=>$('#tableWrap').scrollBy({left:Ma
 $('#tableWrap').addEventListener('wheel',e=>{if(e.shiftKey){e.preventDefault();$('#tableWrap').scrollLeft+=e.deltaY}},{passive:false});
 $('#updatedAt').textContent=DATA_UPDATED_AT;
 $('#refreshDashboard').addEventListener('click',async()=>{if(await checkForAppUpdate())return;loadLiveData({manual:true})});
+const tutorialToggle=$('#socializersTutorialButton');
+if(tutorialToggle)tutorialToggle.addEventListener('click',()=>{
+ const tutorial=$('#socializersTutorial');if(!tutorial)return;
+ tutorial.hidden=!tutorial.hidden;
+ tutorialToggle.setAttribute('aria-expanded',String(!tutorial.hidden));
+ tutorialToggle.innerHTML=tutorial.hidden?'Ver tutorial <span aria-hidden="true">↓</span>':'Ocultar tutorial <span aria-hidden="true">↑</span>';
+ if(!tutorial.hidden)tutorial.scrollIntoView({behavior:'smooth',block:'start'});
+});
 enhanceAllFilters();
 syncOptions();resetDashboardFilters({status:'Instalado'});render();
 loadLiveData();
