@@ -31,6 +31,6 @@
     ],
     "supplementary": "Use sparingly for chart series/categories when it improves reading and contrast.",
     "notice": "Local versioned snapshot. It does not auto-sync with Google Drive; update through approved change control.",
-    "dashboardSurfaces": "Solid black (#000000), no green-tinted backgrounds or green gradients on cards, panels, or guidance blocks. Text white (#FFFFFF); green reserved for brand, interactive accents, borders and chart semantics, not panel fills."
+    "dashboardSurfaces": "Black page (#000000); distinct neutral charcoal panels and raised cards (Socializadores #141414 / #1C1C1C), neutral borders, no green-tinted panel fills or green gradients. White content text. Green brand accents, selected controls and primary buttons with black text; secondary buttons black with white text. Supersedes the all-black panel rule of 26/11/2026."
   }
 }

@@ -36,3 +36,7 @@ El script complementario de Más info sobrescribía el selector de vistas sin co
 
 ## 26/11/2026 — Criterio visual Socializadores
 Tarjetas, paneles, avisos e iconos sobre negro sólido #000000, texto blanco #FFFFFF, sin fondos ni degradados verdes. Verde reservado para identidad y acentos de interacción, no superficies. Se versiona el CSS. Pendiente aceptación visual.
+
+
+## 26/11/2026 — Refinamiento VIS-021
+Sustituye criterio anterior de negro en todos los elementos: negro solo para lienzo, gris carbón neutro para paneles (#141414) y tarjetas internas (#1C1C1C), textos blancos, encabezados de acento verde, CTA verde con texto negro y acción secundaria negra con texto blanco. Sin superficies verdes. Pendiente verificación visual publicada.
