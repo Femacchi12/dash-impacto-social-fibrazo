@@ -28,3 +28,7 @@ El sitio está preparado para GitHub Pages desde la rama `main` y la carpeta ra�
 La navegación del Dashboard Impacto Social suma «Socializadores» junto a «Más info». La vista es responsive, con identidad visual FIBRAZO, mensaje de bienvenida y motivación basado en el documento corporativo [Presentación Socializadores de Fibrazo](https://docs.google.com/document/d/18gdoFjrbglN2UFnXB5azTGk6kSwjWX7jFl-R2P0SAIM/edit), enlace directo al formulario [Impacto Social](https://fibrazo-forms.vercel.app/form/impacto-social), y tutorial desplegable que explica el uso del chat y Portal Mi Fibrazo para consultas, novedades y cambio de contraseña. El chat puede derivar al portal; el cambio de contraseña se efectúa en el portal después de iniciar sesión. No se inventan enlaces de acceso, tiempos de soporte ni pasos de interfaz no documentados.
 
 No se modifican los datos del dashboard, las métricas ni el acceso existente. Archivos: `index.html`, `app-v61.js`, `styles-v48.css`. Pruebas técnicas JS y presencia de vista/estilos realizadas; quedan pendientes verificación de publicación GitHub Pages y QA móvil autenticada.
+
+
+## 26/11/2026 — Corrección Socializadores
+El script complementario de Más info sobrescribía el selector de vistas sin contemplar Socializadores. Se conserva su lógica de indicadores y se corrige la visibilidad de paneles y filtros; se versiona el recurso y se agrega prueba de regresión. Pendiente verificación visual en producción.
