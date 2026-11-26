@@ -22,8 +22,15 @@
     "tables": "Poppins"
   },
   "usage": {
-    "verified": ["primary", "black", "gray", "interface", "tables"],
+    "verified": [
+      "primary",
+      "black",
+      "gray",
+      "interface",
+      "tables"
+    ],
     "supplementary": "Use sparingly for chart series/categories when it improves reading and contrast.",
-    "notice": "Local versioned snapshot. It does not auto-sync with Google Drive; update through approved change control."
+    "notice": "Local versioned snapshot. It does not auto-sync with Google Drive; update through approved change control.",
+    "dashboardSurfaces": "Solid black (#000000), no green-tinted backgrounds or green gradients on cards, panels, or guidance blocks. Text white (#FFFFFF); green reserved for brand, interactive accents, borders and chart semantics, not panel fills."
   }
 }

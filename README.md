@@ -32,3 +32,7 @@ No se modifican los datos del dashboard, las métricas ni el acceso existente. A
 
 ## 26/11/2026 — Corrección Socializadores
 El script complementario de Más info sobrescribía el selector de vistas sin contemplar Socializadores. Se conserva su lógica de indicadores y se corrige la visibilidad de paneles y filtros; se versiona el recurso y se agrega prueba de regresión. Pendiente verificación visual en producción.
+
+
+## 26/11/2026 — Criterio visual Socializadores
+Tarjetas, paneles, avisos e iconos sobre negro sólido #000000, texto blanco #FFFFFF, sin fondos ni degradados verdes. Verde reservado para identidad y acentos de interacción, no superficies. Se versiona el CSS. Pendiente aceptación visual.
